@@ -57,6 +57,7 @@ VS Code Dark+ templates they started from, such as `#c792ea`, `#ffcb6b`, `#f78c6
 `#82aaff`, `#89ddff`, `#65737e` and `#eeffff`. To keep one palette, the build reads a **core
 palette** for each style from upstream's own colors only, by role:
 
+<!-- generated:core -->
 | Role | Upstream source | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- |
 | text | `foreground` | `#ffffff` | `#ffffff` | `#ffffff` |
@@ -85,6 +86,7 @@ palette** for each style from upstream's own colors only, by role:
 | edge | `editorWhitespace.foreground` / `editorGroup.border` | `#2b3e5a` | `#1e2c3f` | `#ff00552a` |
 | shade | `tab.inactiveBackground` / `sideBar.background` / `sideBarSectionHeader.background` | `#372963` | `#1e1d45` | `#240000` |
 | selection | `editor.selectionBackground` / `editor.selectionHighlightBackground` | `#311b92` | `#311b92` | `#ff00552c` |
+<!-- /generated:core -->
 
 A leftover color never ships. The rule or token that carries one takes the core color with the
 same role. `scripts/curation.json` records each change, and `scripts/core-palette.json` the core
@@ -98,11 +100,12 @@ comments `#6766b3`.
 
 The same rule changes in every style. Only additions differ: Scarlet's success color is its teal.
 
-| Rule | Upstream selector | Upstream | Shipped (Cyberpunk, Umbra, Scarlet) | Role | Why |
+<!-- generated:syntax -->
+| Rule | Upstream selector | Upstream | Shipped | Role | Why |
 | --- | --- | --- | --- | --- | --- |
 | Variables | `variable` | `#eeffff` | `#ffffff` | text | Plain names read as text: upstream's own text color is its workbench foreground, which its "Colors" rule also uses. |
 | Invalid | `invalid` | `#ff5370` | `#ff004c` | error | Invalid code is an error: upstream's own error red is gitDecoration.deletedResourceForeground. |
-| Inserted | `markup.inserted` | `#c3e88d` | `#00ff6a` Cyberpunk, `#00ff6a` Umbra, `#00ffc8` Scarlet | success | Inserted lines are additions: upstream's own color for new files is gitDecoration.untrackedResourceForeground. |
+| Inserted | `markup.inserted` | `#c3e88d` | `#00ff6a` (Scarlet: `#00ffc8`) | success | Inserted lines are additions: upstream's own color for new files is gitDecoration.untrackedResourceForeground. |
 | Deleted | `markup.deleted` | `#ff5370` | `#ff004c` | error | Deleted lines are removals: upstream's own color for deleted files is gitDecoration.deletedResourceForeground. |
 | Changed | `markup.changed` | `#c792ea` | `#d57bff` | keyword | Changed lines take upstream's own violet, the keyword color, the hue nearest the Material purple. |
 | Regular expressions | `string.regexp` | `#89ddff` | `#00ffc8` | cyan | Regular expressions take upstream's own cyan, editorLineNumber.activeForeground, so they stand apart from the sky blue strings. |
@@ -119,25 +122,27 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Link descriptions | `string.other.link.description.title.markdown` | `#c792ea` | `#00ff9c` | link | Link text takes the same link color as link titles. |
 | Link references | `constant.other.reference.link.markdown` | `#ffcb6b` | `#fffc58` | number | A link reference is a constant: upstream's own constant color is the yellow of its numbers. |
 | Code blocks | `markup.raw.block` | `#c792ea` | `#d57bff` | keyword | Code blocks take the same violet as inline code. |
-| Fenced code | `markup.raw.block.fenced.markdown` | `#eeffff` | `#ffffff` | text | Fenced code text reads as text: upstream's own text color is its workbench foreground. |
-| Fence punctuation | `punctuation.definition.fenced.markdown` | `#00000050` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases. |
-| Fence language | `variable.language.fenced.markdown` | `#65737e` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
 | Separators | `meta.separator` | `#65737e` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
 | Tables | `markup.table` | `#eeffff` | `#ffffff` | text | Table text reads as text: upstream's own text color is its workbench foreground. |
+| Decorators | none | none | `#d57bff` | keyword | Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet. |
+| Constants | none | none | `#fffc58` | number | Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow. |
 | Log info | `token.info-token` | `#6796e6` | `#00c3ff` | info | Info takes upstream's own info blue, inputValidation.infoBorder and the modified-file color. |
 | Log warnings | `token.warn-token` | `#cd9731` | `#ff9100` | warning | Warnings take upstream's own warning orange, inputValidation.warningBorder. |
 | Log errors | `token.error-token` | `#f44747` | `#ff004c` | error | Errors take upstream's own error red, gitDecoration.deletedResourceForeground. |
 | Log debug | `token.debug-token` | `#b267e6` | `#d57bff` | keyword | Debug takes upstream's own violet, the hue nearest the Dark+ purple. |
+<!-- /generated:syntax -->
 
 ### Other role changes
 
+<!-- generated:roles -->
 | Style | Token | Upstream source | Upstream | Shipped | Role | Why |
 | --- | --- | --- | --- | --- | --- | --- |
 | Cyberpunk | `--text-link` | `textLink.foreground` | `#0084ff` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
 | Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
-| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 on the selected row only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
+| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
+<!-- /generated:roles -->
 
 ### Terminal colors
 
@@ -164,24 +169,26 @@ passes, and a fallback role must also read at 4.5:1 on the terminal background:
 - The mint bright green is 0.057 from Cyberpunk's foreground and 0.054 from Umbra's `#00ff6a`,
   so both take the lime `#9dff00` (15.16:1 and 13.98:1).
 
+<!-- generated:ansi -->
 | Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- | --- |
 | black | `#000000` | shade | `#372963` | `#1e1d45` | `#240000` |
 | red | `#cd3131` | error | `#ff004c` | `#ff004c` | `#ff004c` |
 | green | `#0dbc79` | green | `#00e676` | `#00e676` | `#00e676` |
 | yellow | `#e5e510` | warning | `#ff9100` | `#ff9100` | `#ff9100` |
-| magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` |
 | cyan | `#11a8cd` | cyan (Cyberpunk: info) | `#00c3ff` | `#00ffc8` | `#00ffc8` |
-| blue | `#2472c8` | function (Cyberpunk: editorLink, Scarlet: info) | `#3d81fe` | `#00b0ff` | `#00c3ff` |
+| blue | `#2472c8` | Cyberpunk: editorLink, Umbra: function, Scarlet: info | `#3d81fe` | `#00b0ff` | `#00c3ff` |
+| magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` |
 | white | `#e5e5e5` | blockVariable | `#b4baff` | `#b4baff` | `#b4baff` |
 | brightBlack | `#666666` | comment | `#6766b3` | `#6766b3` | `#6766b3` |
 | brightRed | `#f14c4c` | tag | `#ff5680` | `#ff5680` | `#ff5680` |
-| brightGreen | `#23d18b` | type (all three: lime) | `#9dff00` | `#9dff00` | `#9dff00` |
+| brightGreen | `#23d18b` | lime | `#9dff00` | `#9dff00` | `#9dff00` |
 | brightYellow | `#f5f543` | number | `#fffc58` | `#fffc58` | `#fffc58` |
 | brightBlue | `#3b8eea` | string (Cyberpunk: method) | `#6095ff` | `#76c1ff` | `#76c1ff` |
 | brightMagenta | `#d670d6` | attribute | `#ee6dff` | `#ee6dff` | `#ee6dff` |
 | brightCyan | `#29b8db` | property | `#98e3ff` | `#98e3ff` | `#98e3ff` |
 | brightWhite | `#e5e5e5` | text | `#ffffff` | `#ffffff` | `#ffffff` |
+<!-- /generated:ansi -->
 
 ### Lightness changes
 
@@ -195,25 +202,31 @@ Secondary text must read 4.5:1 on the canvas, quiet fills, popovers, the sidebar
 because Orca paints it on all five. Code colors must read 3:1 on the editor and on the current
 line, which Orca paints with `--accent`. Only the comment color needed a change for that.
 
-| Style | Token | Source | Upstream | Shipped |
+<!-- generated:lightness -->
+| Style | Token or rule | Source | Upstream | Shipped |
 | --- | --- | --- | --- | --- |
 | Cyberpunk | `--muted-foreground` | `tab.inactiveForeground` | `#7877b3` | `#9696d4` |
 | Cyberpunk | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#7877b3` | `#9696d4` |
 | Cyberpunk | `--chat-muted-foreground` | `tab.inactiveForeground` | `#7877b3` | `#9998d7` |
 | Cyberpunk | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#7641a3` | `#9965ca` |
-| Cyberpunk | Comments and quiet Markdown marks | `comment` | `#6766b3` | `#7271bf` |
+| Cyberpunk | Comments | `comment` | `#6766b3` | `#7271bf` |
+| Cyberpunk | Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#6766b3` | `#7271bf` |
+| Cyberpunk | Separators | `meta.separator` | `#6766b3` | `#7271bf` |
 | Umbra | `--muted-foreground` | `tab.inactiveForeground` | `#7877b3` | `#9696d4` |
 | Umbra | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#7877b3` | `#8484c1` |
 | Umbra | `--chat-muted-foreground` | `tab.inactiveForeground` | `#7877b3` | `#8585c2` |
 | Umbra | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff1d53` |
 | Umbra | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#3b5293` | `#516aae` |
-| Umbra | Comments and quiet Markdown marks | `comment` | `#6766b3` | `#7070bd` |
+| Umbra | Comments | `comment` | `#6766b3` | `#7070bd` |
+| Umbra | Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#6766b3` | `#7070bd` |
+| Umbra | Separators | `meta.separator` | `#6766b3` | `#7070bd` |
 | Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e35783` |
 | Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#cc5b80` |
 | Scarlet | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54a78` |
 | Scarlet | `--chat-muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e75c87` |
 | Scarlet | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff2055` |
 | Scarlet | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#70243d` | `#94455c` |
+<!-- /generated:lightness -->
 
 Four colors reach their floor only by leaving the sRGB gamut, which would shift their hue. They
 take the core color of a neighboring role instead, as the role changes table shows: the links of

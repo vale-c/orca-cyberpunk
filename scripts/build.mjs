@@ -1,7 +1,9 @@
 // Generates the Cyberpunk, Cyberpunk Umbra and Cyberpunk Scarlet app and terminal themes from the
 // vendored upstream themes.
-// Usage: node scripts/build.mjs           write themes/, terminal/, scripts/curation.json and
-//                                         scripts/deviations.json
+// Usage: node scripts/build.mjs           write themes/, terminal/, scripts/core-palette.json,
+//                                         scripts/curation.json, scripts/deviations.json and the
+//                                         generated tables in README.md
+// README.md keeps its prose by hand; each <!-- generated:name --> section is rendered here.
 //        node scripts/build.mjs --check   exit 1 if a committed file differs from the output
 //
 // Upstream's themes mix their own neon colors with colors left over from the Material Theme and
@@ -980,6 +982,87 @@ function build(id, style, records) {
   }
 }
 
+const STYLE_NAMES = { cyberpunk: 'Cyberpunk', 'cyberpunk-umbra': 'Umbra', 'cyberpunk-scarlet': 'Scarlet' }
+const code = (value) => (value ? `\`${value}\`` : 'none')
+const table = (header, rows) =>
+  [header, header.map(() => '---'), ...rows].map((cells) => `| ${cells.join(' | ')} |`).join('\n')
+/** One value, the most common one with the styles that differ ("info (Scarlet: cyan)"), or each style's own when all differ. */
+function perStyle(values) {
+  const ids = Object.keys(STYLE_NAMES)
+  const counts = ids.map((id) => values[id]).reduce((map, value) => map.set(value, (map.get(value) ?? 0) + 1), new Map())
+  const common = [...counts].sort((a, b) => b[1] - a[1])[0][0]
+  if (counts.size === ids.length && ids.length > 1) {
+    return ids.map((id) => `${STYLE_NAMES[id]}: ${values[id]}`).join(', ')
+  }
+  const others = ids.filter((id) => values[id] !== common).map((id) => `${STYLE_NAMES[id]}: ${values[id]}`)
+  return others.length ? `${common} (${others.join(', ')})` : common
+}
+
+/** The README's data tables, rendered from the build records. */
+function readmeTables({ core, curation, deviations }) {
+  const ids = Object.keys(STYLE_NAMES)
+  const rowsOf = (kind, test = () => true) => curation.filter((row) => row.kind === kind && test(row))
+  const byName = (rows) => [...new Set(rows.map((row) => row.name))].map((name) => rows.filter((row) => row.name === name))
+  const isAnsi = (row) => row.source.startsWith('VS Code default')
+  return {
+    core: table(
+      ['Role', 'Upstream source', ...ids.map((id) => STYLE_NAMES[id])],
+      Object.keys(core[ids[0]]).map((role) => [
+        role,
+        [...new Set(ids.map((id) => core[id][role].source))].map(code).join(' / '),
+        ...ids.map((id) => code(core[id][role].color))
+      ])
+    ),
+    syntax: table(
+      ['Rule', 'Upstream selector', 'Upstream', 'Shipped', 'Role', 'Why'],
+      byName(rowsOf('syntax')).map((rows) => [
+        rows[0].name,
+        rows[0].source === 'none' ? 'none' : code(rows[0].source),
+        code(rows[0].upstream),
+        perStyle(Object.fromEntries(rows.map((row) => [row.style, code(row.shipped)]))),
+        rows[0].role,
+        rows[0].reason
+      ])
+    ),
+    roles: table(
+      ['Style', 'Token', 'Upstream source', 'Upstream', 'Shipped', 'Role', 'Why'],
+      [...rowsOf('app'), ...rowsOf('terminal', (row) => !isAnsi(row))].map((row) => [
+        STYLE_NAMES[row.style],
+        code(row.kind === 'terminal' ? `terminal ${row.name}` : row.name),
+        code(row.source),
+        code(row.upstream),
+        code(row.shipped),
+        row.role,
+        row.reason
+      ])
+    ),
+    ansi: table(
+      ['Slot', 'VS Code default', 'Role', ...ids.map((id) => STYLE_NAMES[id])],
+      byName(rowsOf('terminal', isAnsi)).map((rows) => {
+        const of = (id) => rows.find((row) => row.style === id)
+        return [rows[0].name, code(rows[0].upstream), perStyle(Object.fromEntries(ids.map((id) => [id, of(id).role]))), ...ids.map((id) => code(of(id).shipped))]
+      })
+    ),
+    lightness: table(
+      ['Style', 'Token or rule', 'Source', 'Upstream', 'Shipped'],
+      deviations.map((row) => [STYLE_NAMES[row.theme], row.kind === 'app' ? code(row.name) : row.name, code(row.source), code(row.upstream), code(row.shipped)])
+    )
+  }
+}
+
+/** README.md with each `<!-- generated:name -->` section replaced by its table. */
+function readmeWithTables(readme, tables) {
+  let text = readme
+  for (const [name, body] of Object.entries(tables)) {
+    const pattern = new RegExp(`(<!-- generated:${name} -->\\n)[\\s\\S]*?(\\n<!-- /generated:${name} -->)`)
+    if (!pattern.test(text)) {
+      throw new Error(`README.md has no generated:${name} section`)
+    }
+    text = text.replace(pattern, (_, open, close) => `${open}${body}${close}`)
+  }
+  return text
+}
+
 function assertUniqueScopes() {
   const seen = new Set()
   for (const scope of SYNTAX.flatMap((rule) => rule.scope)) {
@@ -999,6 +1082,7 @@ for (const [id, style] of Object.entries(STYLES)) {
 files['scripts/core-palette.json'] = records.core
 files['scripts/curation.json'] = records.curation
 files['scripts/deviations.json'] = records.deviations
+files['README.md'] = readmeWithTables(readFileSync(path.join(ROOT, 'README.md'), 'utf8'), readmeTables(records))
 
 // Upstream colors with alpha are first painted onto the surface beneath, as Orca and VS Code do;
 // `upstream` below is that painted color.
@@ -1012,7 +1096,7 @@ const check = process.argv.includes('--check')
 const stale = []
 for (const [relative, data] of Object.entries(files)) {
   const file = path.join(ROOT, relative)
-  const text = `${JSON.stringify(data, null, 2)}\n`
+  const text = typeof data === 'string' ? data : `${JSON.stringify(data, null, 2)}\n`
   if (check) {
     if (!existsSync(file) || readFileSync(file, 'utf8') !== text) {
       stale.push(relative)
