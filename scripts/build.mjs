@@ -163,7 +163,7 @@ const APP_TOKENS = {
   '--tab-active-indicator': 'panelTitle.activeBorder',
   '--tab-inactive': 'tab.inactiveBackground',
   '--tab-inactive-foreground': { from: 'tab.inactiveForeground', over: '--tab-inactive', readable: ['--tab-inactive'] },
-  '--split-divider': { from: 'editorGroup.border', over: '--background' },
+  '--split-divider': { from: { core: 'edge' }, over: '--background' },
   // Why the accent: upstream sets no sash.hoverBorder, and a dragged divider is an active state.
   '--split-divider-hover': { from: { core: 'accent' } },
   '--text-link': {
@@ -549,8 +549,8 @@ const MIN_SYNTAX_CONTRAST = 3
 const MIN_FILL_DISTANCE = 0.06
 const FILL_SURFACES = {
   '--accent': ['--background', '--popover', '--sidebar'],
-  '--muted': ['--background', '--popover'],
-  '--border': ['--background']
+  '--muted': ['--background', '--popover', '--sidebar'],
+  '--border': ['--background', '--muted']
 }
 // Why above Orca's floors: margin so rounding in another color pipeline cannot tip a shade under.
 const MARGIN = 0.05

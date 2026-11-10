@@ -26,7 +26,7 @@
     "--tab-active-foreground": "#00ff9c",
     "--tab-active-indicator": "#00ff9c",
     "--tab-inactive-foreground": "#9696d4",
-    "--split-divider": "#1e2c3f",
+    "--split-divider": "#2b3e5a",
     "--split-divider-hover": "#00ff9c",
     "--text-link": "#00c3ff",
     "--chat-muted-foreground": "#9998d7",
