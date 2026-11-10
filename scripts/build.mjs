@@ -211,7 +211,8 @@ const APP_TOKENS = {
 // upstream's rules: the last rule listing it wins, per setting. `from` may be a descendant
 // selector, which Orca does not read, so `scope` names the plain scopes it ships under.
 // `role` is required when `from` resolves to a leftover: the row ships that core role instead,
-// and `reason` says why that role.
+// and `reason` says why that role. A row with no `from` covers a scope upstream leaves unset; it
+// ships `role`, and the build fails if upstream does color that scope.
 const SYNTAX = [
   { name: 'Comments', from: 'comment', scope: ['comment', 'punctuation.definition.comment'] },
   {
@@ -326,7 +327,7 @@ const SYNTAX = [
   {
     name: 'Markdown text',
     from: 'text.html.markdown',
-    scope: ['text.html.markdown', 'punctuation.definition.list_item.markdown'],
+    scope: ['text.html.markdown'],
     role: 'text',
     reason: "Markdown prose reads as text: upstream's own text color is its workbench foreground."
   },
@@ -406,27 +407,6 @@ const SYNTAX = [
     reason: 'Code blocks take the same violet as inline code.'
   },
   {
-    name: 'Fenced code',
-    from: 'markup.raw.block.fenced.markdown',
-    scope: ['markup.raw.block.fenced.markdown'],
-    role: 'text',
-    reason: "Fenced code text reads as text: upstream's own text color is its workbench foreground."
-  },
-  {
-    name: 'Fence punctuation',
-    from: 'punctuation.definition.fenced.markdown',
-    scope: ['punctuation.definition.fenced.markdown'],
-    role: 'comment',
-    reason: "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
-  },
-  {
-    name: 'Fence language',
-    from: 'variable.language.fenced.markdown',
-    scope: ['variable.language.fenced.markdown'],
-    role: 'comment',
-    reason: "Quiet Markdown syntax marks take upstream's own comment color."
-  },
-  {
     name: 'Separators',
     from: 'meta.separator',
     scope: ['meta.separator'],
@@ -441,6 +421,20 @@ const SYNTAX = [
     reason: "Table text reads as text: upstream's own text color is its workbench foreground."
   },
   { name: 'Quotes', from: 'markup.quote', scope: ['markup.quote'] },
+  // Rows with no `from`: scopes upstream leaves unset, which Orca's languages emit. Without a rule
+  // they would show Monaco's inherited Dark+ color.
+  {
+    name: 'Decorators',
+    scope: ['meta.decorator'],
+    role: 'keyword',
+    reason: "Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet."
+  },
+  {
+    name: 'Constants',
+    scope: ['constant'],
+    role: 'number',
+    reason: "Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow."
+  },
   {
     name: 'Log info',
     from: 'token.info-token',
@@ -752,6 +746,18 @@ function build(id, style, records) {
 
   const syntax = {}
   for (const row of SYNTAX) {
+    if (!row.from) {
+      for (const scope of row.scope) {
+        const reached = upstreamForeground(style, scope)
+        if (reached) {
+          throw new Error(`${id}: "${row.name}" has no \`from\`, but upstream colors ${scope} ${reached}`)
+        }
+      }
+      const color = core[row.role].color
+      curate('syntax', row.name, 'none', null, row.role, color, row.reason)
+      syntax[row.name] = { settings: {}, color }
+      continue
+    }
     const settings = upstreamStyle(style, row.from)
     const upstream = settings.foreground ? normalize(settings.foreground) : undefined
     let color = upstream

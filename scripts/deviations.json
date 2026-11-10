@@ -50,22 +50,6 @@
   {
     "theme": "cyberpunk",
     "kind": "syntax",
-    "name": "Fence punctuation",
-    "source": "punctuation.definition.fenced.markdown",
-    "upstream": "#6766b3",
-    "shipped": "#7271bf"
-  },
-  {
-    "theme": "cyberpunk",
-    "kind": "syntax",
-    "name": "Fence language",
-    "source": "variable.language.fenced.markdown",
-    "upstream": "#6766b3",
-    "shipped": "#7271bf"
-  },
-  {
-    "theme": "cyberpunk",
-    "kind": "syntax",
     "name": "Separators",
     "source": "meta.separator",
     "upstream": "#6766b3",
@@ -124,22 +108,6 @@
     "kind": "syntax",
     "name": "Inline code punctuation",
     "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
-    "upstream": "#6766b3",
-    "shipped": "#7070bd"
-  },
-  {
-    "theme": "cyberpunk-umbra",
-    "kind": "syntax",
-    "name": "Fence punctuation",
-    "source": "punctuation.definition.fenced.markdown",
-    "upstream": "#6766b3",
-    "shipped": "#7070bd"
-  },
-  {
-    "theme": "cyberpunk-umbra",
-    "kind": "syntax",
-    "name": "Fence language",
-    "source": "variable.language.fenced.markdown",
     "upstream": "#6766b3",
     "shipped": "#7070bd"
   },

@@ -192,36 +192,6 @@
   {
     "style": "cyberpunk",
     "kind": "syntax",
-    "name": "Fenced code",
-    "source": "markup.raw.block.fenced.markdown",
-    "upstream": "#eeffff",
-    "role": "text",
-    "shipped": "#ffffff",
-    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
-  },
-  {
-    "style": "cyberpunk",
-    "kind": "syntax",
-    "name": "Fence punctuation",
-    "source": "punctuation.definition.fenced.markdown",
-    "upstream": "#00000050",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
-  },
-  {
-    "style": "cyberpunk",
-    "kind": "syntax",
-    "name": "Fence language",
-    "source": "variable.language.fenced.markdown",
-    "upstream": "#65737e",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
-  },
-  {
-    "style": "cyberpunk",
-    "kind": "syntax",
     "name": "Separators",
     "source": "meta.separator",
     "upstream": "#65737e",
@@ -238,6 +208,26 @@
     "role": "text",
     "shipped": "#ffffff",
     "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Decorators",
+    "source": "none",
+    "upstream": null,
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Constants",
+    "source": "none",
+    "upstream": null,
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow."
   },
   {
     "style": "cyberpunk",
@@ -652,36 +642,6 @@
   {
     "style": "cyberpunk-umbra",
     "kind": "syntax",
-    "name": "Fenced code",
-    "source": "markup.raw.block.fenced.markdown",
-    "upstream": "#eeffff",
-    "role": "text",
-    "shipped": "#ffffff",
-    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
-  },
-  {
-    "style": "cyberpunk-umbra",
-    "kind": "syntax",
-    "name": "Fence punctuation",
-    "source": "punctuation.definition.fenced.markdown",
-    "upstream": "#00000050",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
-  },
-  {
-    "style": "cyberpunk-umbra",
-    "kind": "syntax",
-    "name": "Fence language",
-    "source": "variable.language.fenced.markdown",
-    "upstream": "#65737e",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
-  },
-  {
-    "style": "cyberpunk-umbra",
-    "kind": "syntax",
     "name": "Separators",
     "source": "meta.separator",
     "upstream": "#65737e",
@@ -698,6 +658,26 @@
     "role": "text",
     "shipped": "#ffffff",
     "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Decorators",
+    "source": "none",
+    "upstream": null,
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Constants",
+    "source": "none",
+    "upstream": null,
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow."
   },
   {
     "style": "cyberpunk-umbra",
@@ -1102,36 +1082,6 @@
   {
     "style": "cyberpunk-scarlet",
     "kind": "syntax",
-    "name": "Fenced code",
-    "source": "markup.raw.block.fenced.markdown",
-    "upstream": "#eeffff",
-    "role": "text",
-    "shipped": "#ffffff",
-    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "syntax",
-    "name": "Fence punctuation",
-    "source": "punctuation.definition.fenced.markdown",
-    "upstream": "#00000050",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "syntax",
-    "name": "Fence language",
-    "source": "variable.language.fenced.markdown",
-    "upstream": "#65737e",
-    "role": "comment",
-    "shipped": "#6766b3",
-    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "syntax",
     "name": "Separators",
     "source": "meta.separator",
     "upstream": "#65737e",
@@ -1148,6 +1098,26 @@
     "role": "text",
     "shipped": "#ffffff",
     "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Decorators",
+    "source": "none",
+    "upstream": null,
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Constants",
+    "source": "none",
+    "upstream": null,
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow."
   },
   {
     "style": "cyberpunk-scarlet",

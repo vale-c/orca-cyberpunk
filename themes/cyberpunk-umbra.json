@@ -339,8 +339,7 @@
     {
       "name": "Markdown text",
       "scope": [
-        "text.html.markdown",
-        "punctuation.definition.list_item.markdown"
+        "text.html.markdown"
       ],
       "settings": {
         "foreground": "#ffffff"
@@ -459,33 +458,6 @@
       }
     },
     {
-      "name": "Fenced code",
-      "scope": [
-        "markup.raw.block.fenced.markdown"
-      ],
-      "settings": {
-        "foreground": "#ffffff"
-      }
-    },
-    {
-      "name": "Fence punctuation",
-      "scope": [
-        "punctuation.definition.fenced.markdown"
-      ],
-      "settings": {
-        "foreground": "#7070bd"
-      }
-    },
-    {
-      "name": "Fence language",
-      "scope": [
-        "variable.language.fenced.markdown"
-      ],
-      "settings": {
-        "foreground": "#7070bd"
-      }
-    },
-    {
       "name": "Separators",
       "scope": [
         "meta.separator"
@@ -511,6 +483,24 @@
       ],
       "settings": {
         "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Decorators",
+      "scope": [
+        "meta.decorator"
+      ],
+      "settings": {
+        "foreground": "#d57bff"
+      }
+    },
+    {
+      "name": "Constants",
+      "scope": [
+        "constant"
+      ],
+      "settings": {
+        "foreground": "#fffc58"
       }
     },
     {
