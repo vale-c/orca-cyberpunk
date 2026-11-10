@@ -1,0 +1,1382 @@
+[
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Variables",
+    "source": "variable",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Plain names read as text: upstream's own text color is its workbench foreground, which its \"Colors\" rule also uses."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Invalid",
+    "source": "invalid",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Invalid code is an error: upstream's own error red is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Inserted",
+    "source": "markup.inserted",
+    "upstream": "#c3e88d",
+    "role": "success",
+    "shipped": "#00ff6a",
+    "reason": "Inserted lines are additions: upstream's own color for new files is gitDecoration.untrackedResourceForeground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Deleted",
+    "source": "markup.deleted",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Deleted lines are removals: upstream's own color for deleted files is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Changed",
+    "source": "markup.changed",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Changed lines take upstream's own violet, the keyword color, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Regular expressions",
+    "source": "string.regexp",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Regular expressions take upstream's own cyan, editorLineNumber.activeForeground, so they stand apart from the sky blue strings."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Escape characters",
+    "source": "constant.character.escape",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Escapes read as part of a string pattern, so they take the same cyan as regular expressions."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "JSON keys",
+    "source": "source.json meta.structure.dictionary.json support.type.property-name.json",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "The top-level key color takes upstream's own violet, the hue nearest the Material purple. Orca reads no nested-key selectors, so this is the only key level that ships."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Markdown text",
+    "source": "text.html.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Markdown prose reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Heading marks",
+    "source": "markup.heading.markdown punctuation.definition.heading.markdown",
+    "upstream": "#c3e88d",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Inline code",
+    "source": "text.html.markdown markup.inline.raw.markdown",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Inline code takes upstream's own violet, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Inline code punctuation",
+    "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Italic",
+    "source": "markup.italic",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Emphasis takes upstream's own pink, the tag color, the hue nearest the Material red."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Bold",
+    "source": "markup.bold",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Strong emphasis takes the same pink as italic, as upstream gives both one color."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Underline",
+    "source": "markup.underline",
+    "upstream": "#f78c6c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Underline is emphasis, so it takes the same pink as italic and bold."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Link titles",
+    "source": "string.other.link.title.markdown",
+    "upstream": "#82aaff",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Upstream's own String Link rule colors string.other.link mint. A later Material rule overrode the Markdown link."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Link descriptions",
+    "source": "string.other.link.description.title.markdown",
+    "upstream": "#c792ea",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Link text takes the same link color as link titles."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Link references",
+    "source": "constant.other.reference.link.markdown",
+    "upstream": "#ffcb6b",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "A link reference is a constant: upstream's own constant color is the yellow of its numbers."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Code blocks",
+    "source": "markup.raw.block",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Code blocks take the same violet as inline code."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Fenced code",
+    "source": "markup.raw.block.fenced.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Fence punctuation",
+    "source": "punctuation.definition.fenced.markdown",
+    "upstream": "#00000050",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Fence language",
+    "source": "variable.language.fenced.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Separators",
+    "source": "meta.separator",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Tables",
+    "source": "markup.table",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Log info",
+    "source": "token.info-token",
+    "upstream": "#6796e6",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Info takes upstream's own info blue, inputValidation.infoBorder and the modified-file color."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Log warnings",
+    "source": "token.warn-token",
+    "upstream": "#cd9731",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Warnings take upstream's own warning orange, inputValidation.warningBorder."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Log errors",
+    "source": "token.error-token",
+    "upstream": "#f44747",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Errors take upstream's own error red, gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "syntax",
+    "name": "Log debug",
+    "source": "token.debug-token",
+    "upstream": "#b267e6",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Debug takes upstream's own violet, the hue nearest the Dark+ purple."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "app",
+    "name": "--text-link",
+    "source": "textLink.foreground",
+    "upstream": "#0084ff",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "app",
+    "name": "--diff-removed",
+    "source": "gitDecoration.deletedResourceForeground (error)",
+    "upstream": "#ff004c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "black",
+    "source": "VS Code default terminal.ansiBlack",
+    "upstream": "#000000",
+    "role": "shade",
+    "shipped": "#372963",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (tab.inactiveBackground)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "red",
+    "source": "VS Code default terminal.ansiRed",
+    "upstream": "#cd3131",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's error red (gitDecoration.deletedResourceForeground)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "green",
+    "source": "VS Code default terminal.ansiGreen",
+    "upstream": "#0dbc79",
+    "role": "green",
+    "shipped": "#00e676",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's peek view green (peekView.border)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "yellow",
+    "source": "VS Code default terminal.ansiYellow",
+    "upstream": "#e5e510",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's warning orange, so it stays apart from bright yellow (inputValidation.warningBorder)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "blue",
+    "source": "VS Code default terminal.ansiBlue",
+    "upstream": "#2472c8",
+    "role": "function",
+    "shipped": "#00b0ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's function blue (entity.name.function)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "magenta",
+    "source": "VS Code default terminal.ansiMagenta",
+    "upstream": "#bc3fbc",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "white",
+    "source": "VS Code default terminal.ansiWhite",
+    "upstream": "#e5e5e5",
+    "role": "blockVariable",
+    "shipped": "#b4baff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's lavender white, its block variable color (meta.block variable.other)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightBlack",
+    "source": "VS Code default terminal.ansiBrightBlack",
+    "upstream": "#666666",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's comment color (comment)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightRed",
+    "source": "VS Code default terminal.ansiBrightRed",
+    "upstream": "#f14c4c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's tag pink (entity.name.tag)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightGreen",
+    "source": "VS Code default terminal.ansiBrightGreen",
+    "upstream": "#23d18b",
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's mint, its type color (support.class)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightYellow",
+    "source": "VS Code default terminal.ansiBrightYellow",
+    "upstream": "#f5f543",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's number yellow (constant.numeric)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightBlue",
+    "source": "VS Code default terminal.ansiBrightBlue",
+    "upstream": "#3b8eea",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's sky blue, its string color (string)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightMagenta",
+    "source": "VS Code default terminal.ansiBrightMagenta",
+    "upstream": "#d670d6",
+    "role": "attribute",
+    "shipped": "#ee6dff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's magenta, its attribute color (entity.other.attribute-name)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightCyan",
+    "source": "VS Code default terminal.ansiBrightCyan",
+    "upstream": "#29b8db",
+    "role": "property",
+    "shipped": "#98e3ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's pale cyan, its CSS property color (source.css support.type.property-name)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
+    "name": "brightWhite",
+    "source": "VS Code default terminal.ansiBrightWhite",
+    "upstream": "#e5e5e5",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's white, its workbench foreground (foreground)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Variables",
+    "source": "variable",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Plain names read as text: upstream's own text color is its workbench foreground, which its \"Colors\" rule also uses."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Invalid",
+    "source": "invalid",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Invalid code is an error: upstream's own error red is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Inserted",
+    "source": "markup.inserted",
+    "upstream": "#c3e88d",
+    "role": "success",
+    "shipped": "#00ff6a",
+    "reason": "Inserted lines are additions: upstream's own color for new files is gitDecoration.untrackedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Deleted",
+    "source": "markup.deleted",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Deleted lines are removals: upstream's own color for deleted files is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Changed",
+    "source": "markup.changed",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Changed lines take upstream's own violet, the keyword color, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Regular expressions",
+    "source": "string.regexp",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Regular expressions take upstream's own cyan, editorLineNumber.activeForeground, so they stand apart from the sky blue strings."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Escape characters",
+    "source": "constant.character.escape",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Escapes read as part of a string pattern, so they take the same cyan as regular expressions."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "JSON keys",
+    "source": "source.json meta.structure.dictionary.json support.type.property-name.json",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "The top-level key color takes upstream's own violet, the hue nearest the Material purple. Orca reads no nested-key selectors, so this is the only key level that ships."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Markdown text",
+    "source": "text.html.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Markdown prose reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Heading marks",
+    "source": "markup.heading.markdown punctuation.definition.heading.markdown",
+    "upstream": "#c3e88d",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Inline code",
+    "source": "text.html.markdown markup.inline.raw.markdown",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Inline code takes upstream's own violet, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Inline code punctuation",
+    "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Italic",
+    "source": "markup.italic",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Emphasis takes upstream's own pink, the tag color, the hue nearest the Material red."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Bold",
+    "source": "markup.bold",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Strong emphasis takes the same pink as italic, as upstream gives both one color."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Underline",
+    "source": "markup.underline",
+    "upstream": "#f78c6c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Underline is emphasis, so it takes the same pink as italic and bold."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Link titles",
+    "source": "string.other.link.title.markdown",
+    "upstream": "#82aaff",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Upstream's own String Link rule colors string.other.link mint. A later Material rule overrode the Markdown link."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Link descriptions",
+    "source": "string.other.link.description.title.markdown",
+    "upstream": "#c792ea",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Link text takes the same link color as link titles."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Link references",
+    "source": "constant.other.reference.link.markdown",
+    "upstream": "#ffcb6b",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "A link reference is a constant: upstream's own constant color is the yellow of its numbers."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Code blocks",
+    "source": "markup.raw.block",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Code blocks take the same violet as inline code."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Fenced code",
+    "source": "markup.raw.block.fenced.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Fence punctuation",
+    "source": "punctuation.definition.fenced.markdown",
+    "upstream": "#00000050",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Fence language",
+    "source": "variable.language.fenced.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Separators",
+    "source": "meta.separator",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Tables",
+    "source": "markup.table",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Log info",
+    "source": "token.info-token",
+    "upstream": "#6796e6",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Info takes upstream's own info blue, inputValidation.infoBorder and the modified-file color."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Log warnings",
+    "source": "token.warn-token",
+    "upstream": "#cd9731",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Warnings take upstream's own warning orange, inputValidation.warningBorder."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Log errors",
+    "source": "token.error-token",
+    "upstream": "#f44747",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Errors take upstream's own error red, gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Log debug",
+    "source": "token.debug-token",
+    "upstream": "#b267e6",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Debug takes upstream's own violet, the hue nearest the Dark+ purple."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--text-link",
+    "source": "textLink.foreground",
+    "upstream": "#3d5afe",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "black",
+    "source": "VS Code default terminal.ansiBlack",
+    "upstream": "#000000",
+    "role": "shade",
+    "shipped": "#1e1d45",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (sideBar.background)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "red",
+    "source": "VS Code default terminal.ansiRed",
+    "upstream": "#cd3131",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's error red (gitDecoration.deletedResourceForeground)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "green",
+    "source": "VS Code default terminal.ansiGreen",
+    "upstream": "#0dbc79",
+    "role": "green",
+    "shipped": "#00e676",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's peek view green (peekView.border)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "yellow",
+    "source": "VS Code default terminal.ansiYellow",
+    "upstream": "#e5e510",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's warning orange, so it stays apart from bright yellow (inputValidation.warningBorder)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "blue",
+    "source": "VS Code default terminal.ansiBlue",
+    "upstream": "#2472c8",
+    "role": "function",
+    "shipped": "#00b0ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's function blue (entity.name.function)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "magenta",
+    "source": "VS Code default terminal.ansiMagenta",
+    "upstream": "#bc3fbc",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "white",
+    "source": "VS Code default terminal.ansiWhite",
+    "upstream": "#e5e5e5",
+    "role": "blockVariable",
+    "shipped": "#b4baff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's lavender white, its block variable color (meta.block variable.other)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightBlack",
+    "source": "VS Code default terminal.ansiBrightBlack",
+    "upstream": "#666666",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's comment color (comment)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightRed",
+    "source": "VS Code default terminal.ansiBrightRed",
+    "upstream": "#f14c4c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's tag pink (entity.name.tag)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightGreen",
+    "source": "VS Code default terminal.ansiBrightGreen",
+    "upstream": "#23d18b",
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's mint, its type color (support.class)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightYellow",
+    "source": "VS Code default terminal.ansiBrightYellow",
+    "upstream": "#f5f543",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's number yellow (constant.numeric)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightBlue",
+    "source": "VS Code default terminal.ansiBrightBlue",
+    "upstream": "#3b8eea",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's sky blue, its string color (string)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightMagenta",
+    "source": "VS Code default terminal.ansiBrightMagenta",
+    "upstream": "#d670d6",
+    "role": "attribute",
+    "shipped": "#ee6dff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's magenta, its attribute color (entity.other.attribute-name)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightCyan",
+    "source": "VS Code default terminal.ansiBrightCyan",
+    "upstream": "#29b8db",
+    "role": "property",
+    "shipped": "#98e3ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's pale cyan, its CSS property color (source.css support.type.property-name)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
+    "name": "brightWhite",
+    "source": "VS Code default terminal.ansiBrightWhite",
+    "upstream": "#e5e5e5",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's white, its workbench foreground (foreground)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Variables",
+    "source": "variable",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Plain names read as text: upstream's own text color is its workbench foreground, which its \"Colors\" rule also uses."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Invalid",
+    "source": "invalid",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Invalid code is an error: upstream's own error red is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Inserted",
+    "source": "markup.inserted",
+    "upstream": "#c3e88d",
+    "role": "success",
+    "shipped": "#00ffc8",
+    "reason": "Inserted lines are additions: upstream's own color for new files is gitDecoration.untrackedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Deleted",
+    "source": "markup.deleted",
+    "upstream": "#ff5370",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Deleted lines are removals: upstream's own color for deleted files is gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Changed",
+    "source": "markup.changed",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Changed lines take upstream's own violet, the keyword color, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Regular expressions",
+    "source": "string.regexp",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Regular expressions take upstream's own cyan, editorLineNumber.activeForeground, so they stand apart from the sky blue strings."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Escape characters",
+    "source": "constant.character.escape",
+    "upstream": "#89ddff",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Escapes read as part of a string pattern, so they take the same cyan as regular expressions."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "JSON keys",
+    "source": "source.json meta.structure.dictionary.json support.type.property-name.json",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "The top-level key color takes upstream's own violet, the hue nearest the Material purple. Orca reads no nested-key selectors, so this is the only key level that ships."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Markdown text",
+    "source": "text.html.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Markdown prose reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Heading marks",
+    "source": "markup.heading.markdown punctuation.definition.heading.markdown",
+    "upstream": "#c3e88d",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Inline code",
+    "source": "text.html.markdown markup.inline.raw.markdown",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Inline code takes upstream's own violet, the hue nearest the Material purple."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Inline code punctuation",
+    "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Italic",
+    "source": "markup.italic",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Emphasis takes upstream's own pink, the tag color, the hue nearest the Material red."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Bold",
+    "source": "markup.bold",
+    "upstream": "#f07178",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Strong emphasis takes the same pink as italic, as upstream gives both one color."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Underline",
+    "source": "markup.underline",
+    "upstream": "#f78c6c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Underline is emphasis, so it takes the same pink as italic and bold."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Link titles",
+    "source": "string.other.link.title.markdown",
+    "upstream": "#82aaff",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Upstream's own String Link rule colors string.other.link mint. A later Material rule overrode the Markdown link."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Link descriptions",
+    "source": "string.other.link.description.title.markdown",
+    "upstream": "#c792ea",
+    "role": "link",
+    "shipped": "#00ff9c",
+    "reason": "Link text takes the same link color as link titles."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Link references",
+    "source": "constant.other.reference.link.markdown",
+    "upstream": "#ffcb6b",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "A link reference is a constant: upstream's own constant color is the yellow of its numbers."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Code blocks",
+    "source": "markup.raw.block",
+    "upstream": "#c792ea",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Code blocks take the same violet as inline code."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Fenced code",
+    "source": "markup.raw.block.fenced.markdown",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Fenced code text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Fence punctuation",
+    "source": "punctuation.definition.fenced.markdown",
+    "upstream": "#00000050",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color. The Material color is translucent black, which is invisible on these canvases."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Fence language",
+    "source": "variable.language.fenced.markdown",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Separators",
+    "source": "meta.separator",
+    "upstream": "#65737e",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Quiet Markdown syntax marks take upstream's own comment color."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Tables",
+    "source": "markup.table",
+    "upstream": "#eeffff",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Table text reads as text: upstream's own text color is its workbench foreground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Log info",
+    "source": "token.info-token",
+    "upstream": "#6796e6",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Info takes upstream's own info blue, inputValidation.infoBorder and the modified-file color."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Log warnings",
+    "source": "token.warn-token",
+    "upstream": "#cd9731",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Warnings take upstream's own warning orange, inputValidation.warningBorder."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Log errors",
+    "source": "token.error-token",
+    "upstream": "#f44747",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Errors take upstream's own error red, gitDecoration.deletedResourceForeground."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "syntax",
+    "name": "Log debug",
+    "source": "token.debug-token",
+    "upstream": "#b267e6",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Debug takes upstream's own violet, the hue nearest the Dark+ purple."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--primary",
+    "source": "button.hoverBackground",
+    "upstream": "#00ff9c",
+    "role": "accent",
+    "shipped": "#ff0055",
+    "reason": "Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--chat-selection",
+    "source": "editor.selectionBackground",
+    "upstream": "#000000",
+    "role": "selection",
+    "shipped": "#390e21",
+    "reason": "Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "selectionBackground",
+    "source": "editor.selectionBackground",
+    "upstream": "#000000",
+    "role": "selection",
+    "shipped": "#390e21",
+    "reason": "Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "black",
+    "source": "VS Code default terminal.ansiBlack",
+    "upstream": "#000000",
+    "role": "shade",
+    "shipped": "#240000",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (sideBarSectionHeader.background)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "red",
+    "source": "VS Code default terminal.ansiRed",
+    "upstream": "#cd3131",
+    "role": "error",
+    "shipped": "#ff004c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's error red (gitDecoration.deletedResourceForeground)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "green",
+    "source": "VS Code default terminal.ansiGreen",
+    "upstream": "#0dbc79",
+    "role": "green",
+    "shipped": "#00e676",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's peek view green (peekView.border)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "yellow",
+    "source": "VS Code default terminal.ansiYellow",
+    "upstream": "#e5e510",
+    "role": "warning",
+    "shipped": "#ff9100",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's warning orange, so it stays apart from bright yellow (inputValidation.warningBorder)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "blue",
+    "source": "VS Code default terminal.ansiBlue",
+    "upstream": "#2472c8",
+    "role": "function",
+    "shipped": "#00b0ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's function blue (entity.name.function)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "magenta",
+    "source": "VS Code default terminal.ansiMagenta",
+    "upstream": "#bc3fbc",
+    "role": "keyword",
+    "shipped": "#d57bff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "white",
+    "source": "VS Code default terminal.ansiWhite",
+    "upstream": "#e5e5e5",
+    "role": "blockVariable",
+    "shipped": "#b4baff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's lavender white, its block variable color (meta.block variable.other)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightBlack",
+    "source": "VS Code default terminal.ansiBrightBlack",
+    "upstream": "#666666",
+    "role": "comment",
+    "shipped": "#6766b3",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's comment color (comment)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightRed",
+    "source": "VS Code default terminal.ansiBrightRed",
+    "upstream": "#f14c4c",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's tag pink (entity.name.tag)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightGreen",
+    "source": "VS Code default terminal.ansiBrightGreen",
+    "upstream": "#23d18b",
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's mint, its type color (support.class)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightYellow",
+    "source": "VS Code default terminal.ansiBrightYellow",
+    "upstream": "#f5f543",
+    "role": "number",
+    "shipped": "#fffc58",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's number yellow (constant.numeric)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightBlue",
+    "source": "VS Code default terminal.ansiBrightBlue",
+    "upstream": "#3b8eea",
+    "role": "string",
+    "shipped": "#76c1ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's sky blue, its string color (string)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightMagenta",
+    "source": "VS Code default terminal.ansiBrightMagenta",
+    "upstream": "#d670d6",
+    "role": "attribute",
+    "shipped": "#ee6dff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's magenta, its attribute color (entity.other.attribute-name)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightCyan",
+    "source": "VS Code default terminal.ansiBrightCyan",
+    "upstream": "#29b8db",
+    "role": "property",
+    "shipped": "#98e3ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's pale cyan, its CSS property color (source.css support.type.property-name)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
+    "name": "brightWhite",
+    "source": "VS Code default terminal.ansiBrightWhite",
+    "upstream": "#e5e5e5",
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's white, its workbench foreground (foreground)."
+  }
+]

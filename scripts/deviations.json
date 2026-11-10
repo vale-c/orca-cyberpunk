@@ -1,0 +1,130 @@
+[
+  {
+    "theme": "cyberpunk",
+    "kind": "app",
+    "name": "--muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#8585c2"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "app",
+    "name": "--tab-inactive-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#9696d4"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "app",
+    "name": "--chat-muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#9998d7"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "app",
+    "name": "--git-decoration-ignored",
+    "source": "gitDecoration.ignoredResourceForeground",
+    "upstream": "#7641a3",
+    "shipped": "#9965ca"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#7e7eba"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--tab-inactive-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#8484c1"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--chat-muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#7877b3",
+    "shipped": "#8585c2"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--diff-removed",
+    "source": "gitDecoration.deletedResourceForeground (error)",
+    "upstream": "#ff004c",
+    "shipped": "#ff1d53"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "app",
+    "name": "--git-decoration-ignored",
+    "source": "gitDecoration.ignoredResourceForeground",
+    "upstream": "#3b5293",
+    "shipped": "#516aae"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#cf4573",
+    "shipped": "#d54b78"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--accent-foreground",
+    "source": "list.activeSelectionForeground",
+    "upstream": "#ff0055",
+    "shipped": "#ff215e"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--sidebar-foreground",
+    "source": "sideBar.foreground",
+    "upstream": "#be4e74",
+    "shipped": "#cc5b80"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--tab-inactive-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#cf4573",
+    "shipped": "#d54a78"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--chat-muted-foreground",
+    "source": "tab.inactiveForeground",
+    "upstream": "#cf4573",
+    "shipped": "#e75c87"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--diff-removed",
+    "source": "gitDecoration.deletedResourceForeground (error)",
+    "upstream": "#ff004c",
+    "shipped": "#ff2055"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--git-decoration-ignored",
+    "source": "gitDecoration.ignoredResourceForeground",
+    "upstream": "#70243d",
+    "shipped": "#94455c"
+  }
+]
