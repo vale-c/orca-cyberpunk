@@ -1,15 +1,16 @@
 // Generates the Cyberpunk, Cyberpunk Umbra and Cyberpunk Scarlet app and terminal themes from the
 // vendored upstream themes.
-// Usage: node scripts/build.mjs           write themes/, terminal/, scripts/core-palette.json,
-//                                         scripts/curation.json, scripts/deviations.json and the
-//                                         generated tables in README.md
-// README.md keeps its prose by hand; each <!-- generated:name --> section is rendered here.
-//        node scripts/build.mjs --check   exit 1 if a committed file differs from the output
+// Usage: node scripts/build.mjs           write themes/, terminal/, scripts/deviations.json and
+//                                         the generated tables in README.md
+//        node scripts/build.mjs --check   exit 1 if a written file differs from the output
+// README.md keeps its prose by hand; each <!-- generated:name --> section is rendered here from
+// the build's records: the core palettes, every role change and every lightness change.
+// scripts/deviations.json is the lightness table verify.mjs checks against the theme files.
 //
 // Upstream's themes mix their own neon colors with colors left over from the Material Theme and
 // VS Code Dark+ templates they started from. Each style gets a CORE palette, read from its own
 // upstream colors by role. A color from LEFTOVERS never ships: the token or rule that carries one
-// takes the core color with the same role, and scripts/curation.json records the change.
+// takes the core color with the same role, and the README's role tables record the change.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -1164,8 +1165,6 @@ const files = {}
 for (const [id, style] of Object.entries(STYLES)) {
   Object.assign(files, build(id, style, records))
 }
-files['scripts/core-palette.json'] = records.core
-files['scripts/curation.json'] = records.curation
 files['scripts/deviations.json'] = records.deviations
 files['README.md'] = readmeWithTables(readFileSync(path.join(ROOT, 'README.md'), 'utf8'), readmeTables(records))
 
@@ -1175,7 +1174,7 @@ console.log('Colors changed in OKLCH lightness only (app text to 4.5:1, git stat
 for (const { theme, kind, name, source: from, upstream, shipped } of records.deviations) {
   console.log(`${theme.padEnd(18)} ${kind.padEnd(7)} ${name.padEnd(28)} ${from.padEnd(44)} ${upstream}  ${shipped}`)
 }
-console.log(`Role changes (scripts/curation.json): ${records.curation.length} rows.`)
+console.log(`Role changes (the README's role tables): ${records.curation.length} rows.`)
 
 const check = process.argv.includes('--check')
 const stale = []
