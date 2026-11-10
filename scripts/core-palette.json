@@ -76,6 +76,18 @@
       "source": "peekView.border",
       "color": "#00e676"
     },
+    "lime": {
+      "source": "terminalCursor.foreground",
+      "color": "#9dff00"
+    },
+    "quiet": {
+      "source": "panel.background",
+      "color": "#100d23"
+    },
+    "edge": {
+      "source": "titleBar.border",
+      "color": "#100d23"
+    },
     "shade": {
       "source": "tab.inactiveBackground",
       "color": "#372963"
@@ -162,6 +174,18 @@
       "source": "peekView.border",
       "color": "#00e676"
     },
+    "lime": {
+      "source": "terminalCursor.foreground",
+      "color": "#9dff00"
+    },
+    "quiet": {
+      "source": "panel.background",
+      "color": "#131341"
+    },
+    "edge": {
+      "source": "editorGroup.border",
+      "color": "#1e2c3f"
+    },
     "shade": {
       "source": "sideBar.background",
       "color": "#1e1d45"
@@ -247,6 +271,18 @@
     "green": {
       "source": "peekView.border",
       "color": "#00e676"
+    },
+    "lime": {
+      "source": "terminalCursor.foreground",
+      "color": "#9dff00"
+    },
+    "quiet": {
+      "source": "dropdown.background",
+      "color": "#002212ec"
+    },
+    "edge": {
+      "source": "editorGroup.border",
+      "color": "#ff00552a"
     },
     "shade": {
       "source": "sideBarSectionHeader.background",

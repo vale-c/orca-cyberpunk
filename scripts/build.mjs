@@ -60,7 +60,23 @@ const CORE = {
   warning: 'inputValidation.warningBorder',
   cyan: 'editorLineNumber.activeForeground',
   green: 'peekView.border',
-  // A visible dark step off each style's terminal background, for ANSI black.
+  // A dark color in each style's own hue, for ANSI black. Like most themes' black, it may sit
+  // close to the terminal background.
+  lime: 'terminalCursor.foreground',
+  // Quiet fills: upstream's panel surface, which Scarlet paints like its canvas, so Scarlet takes
+  // its dropdown fill.
+  quiet: {
+    cyberpunk: 'panel.background',
+    'cyberpunk-umbra': 'panel.background',
+    'cyberpunk-scarlet': 'dropdown.background'
+  },
+  // Hairlines: upstream's editor group border, which nearly matches Cyberpunk's canvas, so
+  // Cyberpunk takes its title bar border.
+  edge: {
+    cyberpunk: 'titleBar.border',
+    'cyberpunk-umbra': 'editorGroup.border',
+    'cyberpunk-scarlet': 'editorGroup.border'
+  },
   shade: {
     cyberpunk: 'tab.inactiveBackground',
     'cyberpunk-umbra': 'sideBar.background',
@@ -107,7 +123,9 @@ const APP_TOKENS = {
     }
   },
   '--primary-foreground': 'button.foreground',
-  '--muted': { from: 'input.background', over: '--background' },
+  // Why not input.background: it equals the hover widget in Cyberpunk and Umbra, so quiet fills
+  // inside popovers (the command palette's input band, pinned rows) would vanish.
+  '--muted': { from: { core: 'quiet' }, over: '--background' },
   // Why the inactive tab text: upstream sets no descriptionForeground, and its secondary labels
   // (inactive tabs, inactive panel titles, peek result lines) all use this tinted color. Its line
   // number color is not used: Cyberpunk's #9f5fff leaves the sRGB gamut before it reaches 4.5:1.
@@ -122,7 +140,7 @@ const APP_TOKENS = {
   // would vanish. This is the color upstream itself draws for the selected row of a popover.
   '--accent': { from: 'editorSuggestWidget.selectedBackground', over: '--background' },
   '--accent-foreground': { from: 'list.activeSelectionForeground', readable: ['--accent'], outOfGamut: 'tag' },
-  '--border': { from: 'editorGroup.border', over: '--background' },
+  '--border': { from: { core: 'edge' }, over: '--background' },
   // Why the cursor: Orca paints the editor cursor and selection (30%) with the ring, and upstream
   // sets no focusBorder.
   '--ring': 'editorCursor.foreground',
@@ -456,19 +474,20 @@ const TERMINAL = {
   selectionBackground: { from: { core: 'selection' } }
 }
 // Upstream sets no terminal.ansi* color, so VS Code shows its own defaults (these). Each slot takes
-// the core role that plays its part instead, so all 16 colors come from the style.
+// the core role that plays its part instead, so all 16 colors come from the style. A colored slot
+// whose role sits within MIN_FILL_DISTANCE of the terminal foreground takes its fallback role.
 const ANSI = {
   black: ['#000000', 'shade', 'a dark step off the terminal background in the style\'s own hue'],
   red: ['#cd3131', 'error', "upstream's error red"],
   green: ['#0dbc79', 'green', "upstream's peek view green"],
   yellow: ['#e5e510', 'warning', "upstream's warning orange, so it stays apart from bright yellow"],
-  blue: ['#2472c8', 'function', "upstream's function blue"],
+  blue: ['#2472c8', 'function', "upstream's function blue", 'info'],
   magenta: ['#bc3fbc', 'keyword', "upstream's keyword violet"],
-  cyan: ['#11a8cd', 'cyan', "upstream's cyan, editorLineNumber.activeForeground"],
+  cyan: ['#11a8cd', 'cyan', "upstream's cyan, editorLineNumber.activeForeground", 'info'],
   white: ['#e5e5e5', 'blockVariable', "upstream's lavender white, its block variable color"],
   brightBlack: ['#666666', 'comment', "upstream's comment color"],
   brightRed: ['#f14c4c', 'tag', "upstream's tag pink"],
-  brightGreen: ['#23d18b', 'type', "upstream's mint, its type color"],
+  brightGreen: ['#23d18b', 'type', "upstream's mint, its type color", 'lime'],
   brightYellow: ['#f5f543', 'number', "upstream's number yellow"],
   brightBlue: ['#3b8eea', 'string', "upstream's sky blue, its string color"],
   brightMagenta: ['#d670d6', 'attribute', "upstream's magenta, its attribute color"],
@@ -516,7 +535,11 @@ const MIN_SYNTAX_CONTRAST = 3
 // in lightness. 0.06 is about three just-noticeable differences (0.02 each), so a hovered or
 // selected row stays plain to see on every surface it is painted on.
 const MIN_FILL_DISTANCE = 0.06
-const FILL_SURFACES = { '--accent': ['--background', '--popover', '--sidebar'] }
+const FILL_SURFACES = {
+  '--accent': ['--background', '--popover', '--sidebar'],
+  '--muted': ['--background', '--popover'],
+  '--border': ['--background']
+}
 // Why above Orca's floors: margin so rounding in another color pipeline cannot tip a shade under.
 const MARGIN = 0.05
 
@@ -588,6 +611,12 @@ const lch = (hex) => {
   return { L, C: Math.hypot(a, b), h: (Math.atan2(b, a) * 180) / Math.PI }
 }
 const hueGap = (x, y) => Math.abs(((y - x + 540) % 360) - 180)
+
+/** Euclidean distance in OKLab, the measure MIN_FILL_DISTANCE uses. */
+function fillDistance(x, y) {
+  const [a, b] = [hexToOklab(x), hexToOklab(y)]
+  return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
+}
 
 /** Raises OKLCH lightness (a, b kept: chroma and hue) until `ratioOf` the color reaches `target`. */
 function readable(hex, ratioOf, target) {
@@ -832,8 +861,7 @@ function build(id, style, records) {
   }
   for (const [fill, surfaces] of Object.entries(FILL_SURFACES)) {
     for (const surface of surfaces) {
-      const [a, b] = [hexToOklab(tokens[fill]), hexToOklab(tokens[surface])]
-      const distance = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
+      const distance = fillDistance(tokens[fill], tokens[surface])
       if (distance < MIN_FILL_DISTANCE) {
         fail(`${fill} is ${distance.toFixed(3)} from ${surface} in OKLab, under ${MIN_FILL_DISTANCE}`)
       }
@@ -876,8 +904,19 @@ function build(id, style, records) {
   for (const [key, mapping] of Object.entries(TERMINAL)) {
     terminal[key] = pick('terminal', key, mapping, () => terminalBackground).value
   }
-  for (const [key, [vscodeDefault, role, why]] of Object.entries(ANSI)) {
-    terminal[key] = pick('terminal', key, { from: { core: role } }, () => terminalBackground).value
+  const ACHROMATIC = ['black', 'white', 'brightBlack', 'brightWhite']
+  for (const [key, [vscodeDefault, preferred, why, fallback]] of Object.entries(ANSI)) {
+    const slot = (role) => pick('terminal', key, { from: { core: role } }, () => terminalBackground).value
+    const blends = (color) => !ACHROMATIC.includes(key) && fillDistance(color, terminal.foreground) < MIN_FILL_DISTANCE
+    let [role, reason] = [preferred, `This slot takes ${why} (${core[preferred].source}).`]
+    if (blends(slot(preferred))) {
+      if (!fallback || blends(slot(fallback))) {
+        fail(`ANSI ${key} is within ${MIN_FILL_DISTANCE} of the terminal foreground ${terminal.foreground} in OKLab`)
+      }
+      role = fallback
+      reason = `It would take ${why}, which sits too close to the terminal foreground ${terminal.foreground}, so it takes the ${fallback} role (${core[fallback].source}).`
+    }
+    terminal[key] = slot(role)
     curate(
       'terminal',
       key,
@@ -885,7 +924,7 @@ function build(id, style, records) {
       vscodeDefault,
       role,
       terminal[key],
-      `Upstream sets no ANSI colors, so VS Code shows its own. This slot takes ${why} (${core[role].source}).`
+      `Upstream sets no ANSI colors, so VS Code shows its own. ${reason}`
     )
   }
   const ansi = Object.keys(ANSI).map((key) => terminal[key])
