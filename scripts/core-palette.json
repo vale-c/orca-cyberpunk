@@ -93,8 +93,8 @@
       "color": "#100d23"
     },
     "edge": {
-      "source": "titleBar.border",
-      "color": "#100d23"
+      "source": "editorWhitespace.foreground",
+      "color": "#2b3e5a"
     },
     "shade": {
       "source": "tab.inactiveBackground",
@@ -195,8 +195,8 @@
       "color": "#3d81fe"
     },
     "quiet": {
-      "source": "panel.background",
-      "color": "#131341"
+      "source": "editorGroupHeader.tabsBackground",
+      "color": "#372963"
     },
     "edge": {
       "source": "editorGroup.border",

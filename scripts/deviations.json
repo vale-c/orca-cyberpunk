@@ -37,7 +37,7 @@
     "name": "--muted-foreground",
     "source": "tab.inactiveForeground",
     "upstream": "#7877b3",
-    "shipped": "#7e7eba"
+    "shipped": "#9696d4"
   },
   {
     "theme": "cyberpunk-umbra",

@@ -12,7 +12,7 @@
     "--muted-foreground": "#8585c2",
     "--accent": "#032d69",
     "--accent-foreground": "#00ff9c",
-    "--border": "#100d23",
+    "--border": "#2b3e5a",
     "--ring": "#00ff6a",
     "--sidebar": "#372963",
     "--worktree-sidebar-active": "#100d23",

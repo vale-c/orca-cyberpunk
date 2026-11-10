@@ -63,17 +63,18 @@ const CORE = {
   lime: 'terminalCursor.foreground',
   method: { syntax: 'entity.name.method.js' },
   editorLink: 'editorLink.activeForeground',
-  // Quiet fills: upstream's panel surface, which Scarlet paints like its canvas, so Scarlet takes
-  // its dropdown fill.
+  // Quiet fills: a surface off the canvas, the popover and the sidebar. Cyberpunk's panel is one;
+  // Umbra's panel sits next to its sidebar, so Umbra takes its tab strip; Scarlet's panel is its
+  // canvas, so Scarlet takes its dropdown fill.
   quiet: {
     cyberpunk: 'panel.background',
-    'cyberpunk-umbra': 'panel.background',
+    'cyberpunk-umbra': 'editorGroupHeader.tabsBackground',
     'cyberpunk-scarlet': 'dropdown.background'
   },
-  // Hairlines: upstream's editor group border, which nearly matches Cyberpunk's canvas, so
-  // Cyberpunk takes its title bar border.
+  // Hairlines: upstream's editor group border. In Cyberpunk it nearly matches the canvas, and its
+  // title bar border equals the quiet fill, so Cyberpunk takes its whitespace guide color.
   edge: {
-    cyberpunk: 'titleBar.border',
+    cyberpunk: 'editorWhitespace.foreground',
     'cyberpunk-umbra': 'editorGroup.border',
     'cyberpunk-scarlet': 'editorGroup.border'
   },
