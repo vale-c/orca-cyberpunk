@@ -170,24 +170,24 @@ passes, and a fallback role must also read at 4.5:1 on the terminal background:
   so both take the lime `#9dff00` (15.16:1 and 13.98:1).
 
 <!-- generated:ansi -->
-| Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet |
-| --- | --- | --- | --- | --- | --- |
-| black | `#000000` | shade | `#372963` | `#1e1d45` | `#240000` |
-| red | `#cd3131` | error | `#ff004c` | `#ff004c` | `#ff004c` |
-| green | `#0dbc79` | green | `#00e676` | `#00e676` | `#00e676` |
-| yellow | `#e5e510` | warning | `#ff9100` | `#ff9100` | `#ff9100` |
-| cyan | `#11a8cd` | cyan (Cyberpunk: info) | `#00c3ff` | `#00ffc8` | `#00ffc8` |
-| blue | `#2472c8` | Cyberpunk: editorLink, Umbra: function, Scarlet: info | `#3d81fe` | `#00b0ff` | `#00c3ff` |
-| magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` |
-| white | `#e5e5e5` | blockVariable | `#b4baff` | `#b4baff` | `#b4baff` |
-| brightBlack | `#666666` | comment | `#6766b3` | `#6766b3` | `#6766b3` |
-| brightRed | `#f14c4c` | tag | `#ff5680` | `#ff5680` | `#ff5680` |
-| brightGreen | `#23d18b` | lime | `#9dff00` | `#9dff00` | `#9dff00` |
-| brightYellow | `#f5f543` | number | `#fffc58` | `#fffc58` | `#fffc58` |
-| brightBlue | `#3b8eea` | string (Cyberpunk: method) | `#6095ff` | `#76c1ff` | `#76c1ff` |
-| brightMagenta | `#d670d6` | attribute | `#ee6dff` | `#ee6dff` | `#ee6dff` |
-| brightCyan | `#29b8db` | property | `#98e3ff` | `#98e3ff` | `#98e3ff` |
-| brightWhite | `#e5e5e5` | text | `#ffffff` | `#ffffff` | `#ffffff` |
+| Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet | Why |
+| --- | --- | --- | --- | --- | --- | --- |
+| black | `#000000` | shade | `#372963` | `#1e1d45` | `#240000` | Cyberpunk: This slot takes a dark color in the style's own hue (tab.inactiveBackground). Umbra: This slot takes a dark color in the style's own hue (sideBar.background). Scarlet: This slot takes a dark color in the style's own hue (sideBarSectionHeader.background). |
+| red | `#cd3131` | error | `#ff004c` | `#ff004c` | `#ff004c` | This slot takes upstream's error red (gitDecoration.deletedResourceForeground). |
+| green | `#0dbc79` | green | `#00e676` | `#00e676` | `#00e676` | This slot takes upstream's peek view green (peekView.border). |
+| yellow | `#e5e510` | warning | `#ff9100` | `#ff9100` | `#ff9100` | This slot takes upstream's warning orange, so it stays apart from bright yellow (inputValidation.warningBorder). |
+| cyan | `#11a8cd` | cyan (Cyberpunk: info) | `#00c3ff` | `#00ffc8` | `#00ffc8` | Cyberpunk: It would take upstream's cyan, editorLineNumber.activeForeground, 0.000 from the terminal foreground #00ffc8, under 0.06, so it takes the info role (gitDecoration.modifiedResourceForeground), 9.29:1 on the terminal background. Umbra, Scarlet: This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground). |
+| blue | `#2472c8` | Cyberpunk: editorLink, Umbra: function, Scarlet: info | `#3d81fe` | `#00b0ff` | `#00c3ff` | Cyberpunk: It would take upstream's function blue, 0.053 from cyan #00c3ff, under 0.06, so it takes the editorLink role (editorLink.activeForeground), 5.23:1 on the terminal background. Umbra: This slot takes upstream's function blue (entity.name.function). Scarlet: It would take upstream's function blue, 0.038 from the terminal foreground #00a2ff, under 0.06, so it takes the info role (gitDecoration.modifiedResourceForeground), 9.20:1 on the terminal background. |
+| magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` | This slot takes upstream's keyword violet (keyword). |
+| white | `#e5e5e5` | blockVariable | `#b4baff` | `#b4baff` | `#b4baff` | This slot takes upstream's lavender white, its block variable color (meta.block variable.other). |
+| brightBlack | `#666666` | comment | `#6766b3` | `#6766b3` | `#6766b3` | This slot takes upstream's comment color (comment). |
+| brightRed | `#f14c4c` | tag | `#ff5680` | `#ff5680` | `#ff5680` | This slot takes upstream's tag pink (entity.name.tag). |
+| brightGreen | `#23d18b` | lime | `#9dff00` | `#9dff00` | `#9dff00` | Cyberpunk: It would take upstream's mint, its type color, 0.057 from the terminal foreground #00ffc8, under 0.06, so it takes the lime role (terminalCursor.foreground), 15.16:1 on the terminal background. Umbra: It would take upstream's mint, its type color, 0.054 from the terminal foreground #00ff6a, under 0.06, so it takes the lime role (terminalCursor.foreground), 13.98:1 on the terminal background. Scarlet: It would take upstream's mint, its type color, 0.057 from cyan #00ffc8, under 0.06, so it takes the lime role (terminalCursor.foreground), 15.03:1 on the terminal background. |
+| brightYellow | `#f5f543` | number | `#fffc58` | `#fffc58` | `#fffc58` | This slot takes upstream's number yellow (constant.numeric). |
+| brightBlue | `#3b8eea` | string (Cyberpunk: method) | `#6095ff` | `#76c1ff` | `#76c1ff` | Cyberpunk: It would take upstream's sky blue, its string color, 0.055 from cyan #00c3ff, under 0.06, so it takes the method role (entity.name.method.js), 6.56:1 on the terminal background. Umbra, Scarlet: This slot takes upstream's sky blue, its string color (string). |
+| brightMagenta | `#d670d6` | attribute | `#ee6dff` | `#ee6dff` | `#ee6dff` | This slot takes upstream's magenta, its attribute color (entity.other.attribute-name). |
+| brightCyan | `#29b8db` | property | `#98e3ff` | `#98e3ff` | `#98e3ff` | This slot takes upstream's pale cyan, its CSS property color (source.css support.type.property-name). |
+| brightWhite | `#e5e5e5` | text | `#ffffff` | `#ffffff` | `#ffffff` | This slot takes upstream's white, its workbench foreground (foreground). |
 <!-- /generated:ansi -->
 
 ### Lightness changes

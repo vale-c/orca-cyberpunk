@@ -664,12 +664,19 @@ function chatSurfaces(foreground, background) {
   }
 }
 
+/** A token rule's selectors: its scope list or comma-separated string, trimmed. */
+const selectorsOf = (rule) =>
+  [rule.scope ?? []]
+    .flat()
+    .flatMap((scope) => scope.split(','))
+    .map((selector) => selector.trim())
+    .filter(Boolean)
+
 /** The settings VS Code resolves for exactly this selector: per setting, the last rule listing it. */
 function upstreamStyle(style, selector) {
   const settings = {}
   for (const rule of style.tokenColors) {
-    const selectors = [rule.scope ?? []].flat().flatMap((scope) => scope.split(','))
-    if (selectors.some((scope) => scope.trim() === selector)) {
+    if (selectorsOf(rule).includes(selector)) {
       Object.assign(settings, rule.settings)
     }
   }
@@ -684,8 +691,7 @@ function upstreamStyle(style, selector) {
 function upstreamForeground(style, scope) {
   let best
   for (const rule of style.tokenColors) {
-    const selectors = [rule.scope ?? []].flat().flatMap((entry) => entry.split(',')).map((entry) => entry.trim())
-    for (const selector of selectors.filter((entry) => entry && !/\s/.test(entry))) {
+    for (const selector of selectorsOf(rule).filter((entry) => !/\s/.test(entry))) {
       if (rule.settings.foreground && (scope === selector || scope.startsWith(`${selector}.`))) {
         const score = selector.split('.').length
         if (!best || score >= best.score) {
@@ -939,13 +945,14 @@ function build(id, style, records) {
         return null
       }
       if (fillDistance(color, terminal.foreground) < MIN_FILL_DISTANCE) {
-        return `the terminal foreground ${terminal.foreground}`
+        return `${fillDistance(color, terminal.foreground).toFixed(3)} from the terminal foreground ${terminal.foreground}`
       }
       const near = colored.find((other) => !sameName(key, other) && fillDistance(color, terminal[other]) < MIN_FILL_DISTANCE)
       if (near) {
-        return `${near} ${terminal[near]}`
+        return `${fillDistance(color, terminal[near]).toFixed(3)} from ${near} ${terminal[near]}`
       }
-      return role !== preferred && contrast(color, terminalBackground) < MIN_TEXT_CONTRAST ? `under ${MIN_TEXT_CONTRAST}:1 on the terminal background` : null
+      const ratio = contrast(color, terminalBackground)
+      return role !== preferred && ratio < MIN_TEXT_CONTRAST ? `${ratio.toFixed(2)}:1 on the terminal background` : null
     }
     const first = clash(preferred)
     const role = [preferred, ...fallbacks].find((candidate) => !clash(candidate))
@@ -955,13 +962,13 @@ function build(id, style, records) {
     const reason =
       role === preferred
         ? `This slot takes ${why} (${core[preferred].source}).`
-        : `It would take ${why}, which sits within ${MIN_FILL_DISTANCE} of ${first}, so it takes the ${role} role (${core[role].source}).`
+        : `It would take ${why}, ${first}, under ${MIN_FILL_DISTANCE}, so it takes the ${role} role (${core[role].source}), ${contrast(slot(role), terminalBackground).toFixed(2)}:1 on the terminal background.`
     terminal[key] = slot(role)
     if (!ACHROMATIC.includes(key)) {
       colored.push(key)
     }
     curate(
-      'terminal',
+      'ansi',
       key,
       `VS Code default terminal.ansi${key[0].toUpperCase()}${key.slice(1)}`,
       vscodeDefault,
@@ -998,12 +1005,17 @@ function perStyle(values) {
   return others.length ? `${common} (${others.join(', ')})` : common
 }
 
+/** One text, or each distinct text with the styles that share it: "Cyberpunk, Umbra: a Scarlet: b". */
+function stylesByText(texts) {
+  const groups = Object.entries(texts).reduce((map, [id, text]) => map.set(text, [...(map.get(text) ?? []), STYLE_NAMES[id]]), new Map())
+  return groups.size === 1 ? [...groups.keys()][0] : [...groups].map(([text, names]) => `${names.join(', ')}: ${text}`).join(' ')
+}
+
 /** The README's data tables, rendered from the build records. */
 function readmeTables({ core, curation, deviations }) {
   const ids = Object.keys(STYLE_NAMES)
-  const rowsOf = (kind, test = () => true) => curation.filter((row) => row.kind === kind && test(row))
+  const rowsOf = (kind) => curation.filter((row) => row.kind === kind)
   const byName = (rows) => [...new Set(rows.map((row) => row.name))].map((name) => rows.filter((row) => row.name === name))
-  const isAnsi = (row) => row.source.startsWith('VS Code default')
   return {
     core: table(
       ['Role', 'Upstream source', ...ids.map((id) => STYLE_NAMES[id])],
@@ -1026,7 +1038,7 @@ function readmeTables({ core, curation, deviations }) {
     ),
     roles: table(
       ['Style', 'Token', 'Upstream source', 'Upstream', 'Shipped', 'Role', 'Why'],
-      [...rowsOf('app'), ...rowsOf('terminal', (row) => !isAnsi(row))].map((row) => [
+      curation.filter((row) => row.kind === 'app' || row.kind === 'terminal').map((row) => [
         STYLE_NAMES[row.style],
         code(row.kind === 'terminal' ? `terminal ${row.name}` : row.name),
         code(row.source),
@@ -1037,10 +1049,16 @@ function readmeTables({ core, curation, deviations }) {
       ])
     ),
     ansi: table(
-      ['Slot', 'VS Code default', 'Role', ...ids.map((id) => STYLE_NAMES[id])],
-      byName(rowsOf('terminal', isAnsi)).map((rows) => {
+      ['Slot', 'VS Code default', 'Role', ...ids.map((id) => STYLE_NAMES[id]), 'Why'],
+      byName(rowsOf('ansi')).map((rows) => {
         const of = (id) => rows.find((row) => row.style === id)
-        return [rows[0].name, code(rows[0].upstream), perStyle(Object.fromEntries(ids.map((id) => [id, of(id).role]))), ...ids.map((id) => code(of(id).shipped))]
+        return [
+          rows[0].name,
+          code(rows[0].upstream),
+          perStyle(Object.fromEntries(ids.map((id) => [id, of(id).role]))),
+          ...ids.map((id) => code(of(id).shipped)),
+          stylesByText(Object.fromEntries(ids.map((id) => [id, of(id).reason.replace(/^Upstream sets no ANSI colors, so VS Code shows its own\. /, '')])))
+        ]
       })
     ),
     lightness: table(
