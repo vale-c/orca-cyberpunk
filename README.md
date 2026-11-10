@@ -114,7 +114,7 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Markdown text | `text.html.markdown` | `#eeffff` | `#ffffff` | text | Markdown prose reads as text: upstream's own text color is its workbench foreground. |
 | Heading marks | `markup.heading.markdown punctuation.definition.heading.markdown` | `#c3e88d` | `#00ff9c` | type | The # marks take the mint that upstream's own entity.name rule gives the heading text. |
 | Inline code | `text.html.markdown markup.inline.raw.markdown` | `#c792ea` | `#d57bff` | keyword | Inline code takes upstream's own violet, the hue nearest the Material purple. |
-| Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#65737e` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
+| Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#65737e` | Cyberpunk: `#7271bf`, Umbra: `#7070bd`, Scarlet: `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
 | Italic | `markup.italic` | `#f07178` | `#ff5680` | tag | Emphasis takes upstream's own pink, the tag color, the hue nearest the Material red. |
 | Bold | `markup.bold` | `#f07178` | `#ff5680` | tag | Strong emphasis takes the same pink as italic, as upstream gives both one color. |
 | Underline | `markup.underline` | `#f78c6c` | `#ff5680` | tag | Underline is emphasis, so it takes the same pink as italic and bold. |
@@ -122,7 +122,7 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Link descriptions | `string.other.link.description.title.markdown` | `#c792ea` | `#00ff9c` | link | Link text takes the same link color as link titles. |
 | Link references | `constant.other.reference.link.markdown` | `#ffcb6b` | `#fffc58` | number | A link reference is a constant: upstream's own constant color is the yellow of its numbers. |
 | Code blocks | `markup.raw.block` | `#c792ea` | `#d57bff` | keyword | Code blocks take the same violet as inline code. |
-| Separators | `meta.separator` | `#65737e` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
+| Separators | `meta.separator` | `#65737e` | Cyberpunk: `#7271bf`, Umbra: `#7070bd`, Scarlet: `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
 | Tables | `markup.table` | `#eeffff` | `#ffffff` | text | Table text reads as text: upstream's own text color is its workbench foreground. |
 | Decorators | none | none | `#d57bff` | keyword | Upstream sets none, so Orca would show Dark+. VS Code grammars scope annotations as storage.type.annotation, which upstream's keyword rule colors violet. |
 | Constants | none | none | `#fffc58` | number | Upstream sets none, so Orca would show Dark+. Upstream colors its named constants (constant.language, support.constant) with its number yellow. |
@@ -137,14 +137,16 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 <!-- generated:roles -->
 | Style | Token | Upstream source | Upstream | Shipped | Role | Why |
 | --- | --- | --- | --- | --- | --- | --- |
-| Cyberpunk | `--text-link` | `textLink.foreground` | `#0084ff` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
-| Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
-| Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
-| Scarlet | `--popover-foreground` | `editor.foreground` | `#ff0055` | `#ff5680` | tag | Secondary text reads 5.77:1 on --popover, above this primary text at 5.21:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.68:1. |
+| Cyberpunk | `--sidebar-foreground` | `sideBar.foreground` | `#b08bff` | `#a5a7f9` | comment | Lightness alone reaches its floors only outside the sRGB gamut (#b08bff to #be9aff, a hue shift), so it takes the nearest comment role, comment, lifted in lightness to #a5a7f9. |
+| Cyberpunk | `--text-link` | `textLink.foreground` | `#0084ff` | `#00c3ff` | info | Lightness alone reaches its floors only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
+| Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches its floors only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
+| Umbra | `--sidebar-foreground` | `sideBar.foreground` | `#8b96ff` | `#b4baff` | blockVariable | Lightness alone reaches its floors only outside the sRGB gamut (#8b96ff to #9ca8ff, a hue shift), so it takes the nearest blockVariable role, meta.block variable.other. |
+| Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches its floors only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
+| Scarlet | `--popover-foreground` | `editor.foreground` | `#ff0055` | `#ffffff` | text | Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff668a, a hue shift), so it takes the nearest text role, foreground. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
-| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
-| Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#ff5680` | tag | Secondary text reads 5.58:1 on --sidebar, above this primary text at 5.04:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.46:1. |
-| Scarlet | `--sidebar-border` | `sideBar.border` | `#101116` | `#ff00552a` | edge | Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role. |
+| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ffffff` | text | Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff668a, a hue shift), so it takes the nearest text role, foreground. |
+| Scarlet | `--sidebar-border` | `sideBar.border` | `#101116` | `#32091a` | edge | Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role. |
+| Scarlet | `--tab-active-foreground` | `tab.activeForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff4572, a hue shift), so it takes the nearest tag role, entity.name.tag. |
 <!-- /generated:roles -->
 
 ### Terminal colors
@@ -215,6 +217,7 @@ line, which Orca paints with `--accent`. Only the comment color needed a change 
 | Umbra | Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#6766b3` | `#7070bd` |
 | Umbra | Separators | `meta.separator` | `#6766b3` | `#7070bd` |
 | Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e35783` |
+| Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#ec779b` |
 | Scarlet | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54a78` |
 | Scarlet | `--chat-muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e75c87` |
 | Scarlet | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff2055` |

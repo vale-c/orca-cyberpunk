@@ -103,22 +103,24 @@ const CORE = {
 // token. `chat` makes the token read at 4.5:1 where Orca's chat paints it: on the derived chat
 // surfaces in `on` (a translucent token is painted over the surface named after it), first mixed
 // with --foreground at `mixForeground` percent, as Orca mixes chat links and diff text. `curate`
-// replaces a style's upstream color with another source, recorded in scripts/curation.json.
+// replaces a style's upstream color with another source, recorded as a role change.
 // `outOfGamut` names the core role a token takes when lightness alone reaches its floor only
-// outside the sRGB gamut, which would shift its hue; the change is recorded in curation.json.
-// `outranks` lists surfaces where Orca paints both this primary text and --muted-foreground: the
-// token must read at higher contrast there, or it takes the nearest core role that does.
+// outside the sRGB gamut, which would shift its hue; the change is recorded as a role change.
+// `outranks` maps each surface where Orca paints this primary text beside a secondary text token
+// to that secondary token. The primary text must sit at least MIN_FILL_DISTANCE above it in OKLab
+// lightness; the readable step lifts it there, and when that step leaves the sRGB gamut the token
+// takes the nearest core role that the same step can lift in gamut.
 const APP_TOKENS = {
   '--background': 'editor.background',
   '--editor-surface': 'editor.background',
   // Why the workbench foreground: Orca's --foreground is the text of chat, settings and menus
   // as well as the editor, and upstream's workbench text is white. Its mint (Scarlet: scarlet)
   // editor.foreground stays the accent, so the strongest color marks action and state.
-  '--foreground': { from: 'foreground', outranks: ['--background'] },
+  '--foreground': { from: 'foreground', outranks: { '--background': '--muted-foreground' } },
   // Why the hover widget: each upstream screenshot shows it, a near-black in the accent's hue.
   '--popover': { from: 'editorHoverWidget.background', over: '--background' },
   // Why editor.foreground: the hover text in each upstream screenshot is the editor text color.
-  '--popover-foreground': { from: 'editor.foreground', readable: ['--popover'], outranks: ['--popover'] },
+  '--popover-foreground': { from: 'editor.foreground', readable: ['--popover'], outranks: { '--popover': '--muted-foreground' } },
   // Why the hover color: button.background is this color at 65%, so the hover is the button's
   // own opaque color.
   '--primary': {
@@ -148,7 +150,11 @@ const APP_TOKENS = {
   // colors equal its hover widget in Umbra and its canvas in Scarlet, so a selected menu row
   // would vanish. This is the color upstream itself draws for the selected row of a popover.
   '--accent': { from: 'editorSuggestWidget.selectedBackground', over: '--background' },
-  '--accent-foreground': { from: 'list.activeSelectionForeground', readable: ['--accent'], outOfGamut: 'tag' },
+  '--accent-foreground': {
+    from: 'list.activeSelectionForeground',
+    readable: ['--accent'],
+    outranks: { '--accent': '--muted-foreground' }
+  },
   '--border': { from: { core: 'edge' }, over: '--background' },
   // Why the cursor: Orca paints the editor cursor and selection (30%) with the ring, and upstream
   // sets no focusBorder.
@@ -157,7 +163,7 @@ const APP_TOKENS = {
   '--sidebar-foreground': {
     from: 'sideBar.foreground',
     readable: ['--sidebar', ['--worktree-sidebar-active', '--sidebar']],
-    outranks: ['--sidebar']
+    outranks: { '--sidebar': '--muted-foreground' }
   },
   '--sidebar-border': {
     from: 'sideBar.border',
@@ -174,7 +180,12 @@ const APP_TOKENS = {
   '--host-badge-foreground': 'badge.foreground',
   '--tab-bar': 'editorGroupHeader.tabsBackground',
   '--tab-active': 'tab.activeBackground',
-  '--tab-active-foreground': { from: 'tab.activeForeground', readable: ['--tab-active', '--tab-inactive'] },
+  // Why outrank the inactive text: Orca paints active text on hovered inactive tabs.
+  '--tab-active-foreground': {
+    from: 'tab.activeForeground',
+    readable: ['--tab-active', '--tab-inactive'],
+    outranks: { '--tab-inactive': '--tab-inactive-foreground' }
+  },
   // Why the panel's active tab border: Cyberpunk and Umbra set no tab.activeBorder, and every
   // style draws its active panel tab with this line (Scarlet's tab.activeBorder is the same).
   '--tab-active-indicator': 'panelTitle.activeBorder',
@@ -499,6 +510,9 @@ const TERMINAL = {
 // role must also read at 4.5:1 on the terminal background.
 // Why cyan before blue: Cyberpunk's foreground is upstream's cyan, so its cyan slot falls back to
 // the info blue, and the blue slots then step around it.
+// Core roles that color surfaces, never text.
+const SURFACE_ROLES = ['quiet', 'edge', 'shade', 'selection']
+
 const ANSI = {
   black: ['#000000', 'shade', "a dark color in the style's own hue"],
   red: ['#cd3131', 'error', "upstream's error red"],
@@ -558,6 +572,11 @@ const MIN_SYNTAX_CONTRAST = 3
 // in lightness. 0.06 is about three just-noticeable differences (0.02 each), so a hovered or
 // selected row stays plain to see on every surface it is painted on.
 const MIN_FILL_DISTANCE = 0.06
+// Why 30 degrees: a primary text color that moves further in OKLCH hue reads as a different color,
+// and plain white is then the honest fallback.
+const MAX_HUE_GAP = 30
+// Chroma under which OKLCH hue is noise (verify.mjs uses the same bound).
+const GREY_CHROMA = 0.02
 const FILL_SURFACES = {
   '--accent': ['--background', '--popover', '--sidebar'],
   '--muted': ['--background', '--popover', '--sidebar'],
@@ -765,8 +784,12 @@ function build(id, style, records) {
   const core = corePalette(id, style)
   const deviate = (kind, name, from, upstream, shipped) =>
     records.deviations.push({ theme: id, kind, name, source: from, upstream, shipped })
-  const curate = (kind, name, source, upstream, role, shipped, reason) =>
-    records.curation.push({ style: id, kind, name, source, upstream, role, shipped, reason })
+  /** Records a role change; the caller sets `shipped` once the color is final. */
+  const curate = (kind, name, source, upstream, role, reason) => {
+    const row = { style: id, kind, name, source, upstream, role, shipped: null, reason }
+    records.curation.push(row)
+    return row
+  }
 
   const syntax = {}
   for (const row of SYNTAX) {
@@ -778,19 +801,19 @@ function build(id, style, records) {
         }
       }
       const color = core[row.role].color
-      curate('syntax', row.name, 'none', null, row.role, color, row.reason)
-      syntax[row.name] = { settings: {}, color }
+      syntax[row.name] = { settings: {}, color, curated: curate('syntax', row.name, 'none', null, row.role, row.reason) }
       continue
     }
     const settings = upstreamStyle(style, row.from)
     const upstream = settings.foreground ? normalize(settings.foreground) : undefined
     let color = upstream
+    let curated = null
     if (upstream && LEFTOVERS[upstream]) {
       if (!row.role) {
         throw new Error(`${id}: "${row.name}" (${row.from}) is ${upstream}, a ${LEFTOVERS[upstream]} leftover, and the row names no role`)
       }
       color = core[row.role].color
-      curate('syntax', row.name, row.from, upstream, row.role, color, row.reason)
+      curated = curate('syntax', row.name, row.from, upstream, row.role, row.reason)
     } else if (row.role) {
       throw new Error(`${id}: "${row.name}" names a role, but upstream's ${upstream ?? 'missing'} color is no leftover`)
     }
@@ -801,7 +824,7 @@ function build(id, style, records) {
         throw new Error(`${id}: "${row.name}" ships ${scope}, which upstream colors ${reached}, a ${LEFTOVERS[reached]} leftover. Drop the scope or curate it`)
       }
     }
-    syntax[row.name] = { settings, color }
+    syntax[row.name] = { settings, color, curated }
   }
 
   const label = (ref) => (typeof ref === 'string' ? ref : `${core[ref.core].source} (${ref.core})`)
@@ -813,10 +836,9 @@ function build(id, style, records) {
     let source = label(spec.from)
     let value = read(spec.from)
     const curation = spec.curate?.[id]
+    const curated = curation && curate(kind, name, source, value, curation.to.core ?? label(curation.to), curation.reason)
     if (curation) {
-      const to = read(curation.to)
-      curate(kind, name, source, value, curation.to.core ?? label(curation.to), to, curation.reason)
-      ;[source, value] = [label(curation.to), to]
+      ;[source, value] = [label(curation.to), read(curation.to)]
     }
     if (!isTranslucent(value)) {
       value = value.slice(0, 7)
@@ -827,7 +849,10 @@ function build(id, style, records) {
       }
       value = over(value, surface)
     }
-    return { spec, source, value }
+    if (curated) {
+      curated.shipped = value
+    }
+    return { spec, source, value, curated }
   }
 
   const tokens = {}
@@ -840,8 +865,8 @@ function build(id, style, records) {
     }
     const picked = pick('app', token, APP_TOKENS[token], (spec) => spec.over && resolve(spec.over))
     const { spec, source } = picked
-    let { value } = picked
-    if (spec.readable || spec.chat) {
+    let { value, curated } = picked
+    if (spec.readable || spec.chat || spec.outranks) {
       const min = spec.min ?? MIN_TEXT_CONTRAST
       const chat = spec.chat ? chatSurfaces(resolve('--foreground'), resolve('--background')) : {}
       const surface = (name) => (name.startsWith('--') ? resolve(name) : chat[name])
@@ -849,58 +874,53 @@ function build(id, style, records) {
       const surfaces = (spec.readable ?? []).map(paint)
       const chatOn = (spec.chat?.on ?? []).map(paint)
       const chatText = (color) => (spec.chat?.mixForeground ? mix(resolve('--foreground'), color, spec.chat.mixForeground) : color)
+      // Why the lightness floor: primary text must stay plainly brighter than the secondary text
+      // beside it, so a color under the floor counts as unreadable here.
+      const floor = Math.max(-Infinity, ...Object.values(spec.outranks ?? {}).map((secondary) => hexToOklab(resolve(secondary))[0] + MIN_FILL_DISTANCE))
       const ratioOf = (color) =>
-        Math.min(...surfaces.map((on) => contrast(color, on)), ...chatOn.map((on) => contrast(chatText(color), on)))
-      const shipped = readable(value, ratioOf, min + MARGIN)
+        hexToOklab(color)[0] < floor
+          ? 0
+          : Math.min(Infinity, ...surfaces.map((on) => contrast(color, on)), ...chatOn.map((on) => contrast(chatText(color), on)))
+      const target = min + MARGIN
+      const shipped = readable(value, ratioOf, target)
       if (lightnessOnly(value, shipped)) {
         if (shipped !== value) {
           deviate('app', token, source, value, shipped)
         }
         value = shipped
-      } else if (spec.outOfGamut && ratioOf(core[spec.outOfGamut].color) >= min + MARGIN) {
-        const neighbor = core[spec.outOfGamut].color
-        curate(
-          'app',
-          token,
-          source,
-          value,
-          spec.outOfGamut,
-          neighbor,
-          `Lightness alone reaches ${min}:1 only outside the sRGB gamut (${value} to ${shipped}, a hue shift), so it takes the neighboring ${spec.outOfGamut} role, ${core[spec.outOfGamut].source}.`
-        )
-        value = neighbor
       } else {
-        throw new Error(`${id}: ${token} reaches ${min}:1 only by leaving the sRGB gamut (${value} to ${shipped})`)
+        // Why these roles: a named neighbor first, then for primary text the core roles of nearly
+        // the same hue, nearest first, then plain white text. Each is lifted by the same lightness
+        // step and kept only inside the gamut.
+        const nearest = spec.outranks
+          ? [
+              ...Object.keys(core)
+                .filter((role) => !SURFACE_ROLES.includes(role) && lch(core[role].color).C > GREY_CHROMA)
+                .map((role) => ({ role, gap: hueGap(lch(value).h, lch(core[role].color).h) }))
+                .filter(({ gap }) => gap <= MAX_HUE_GAP)
+                .sort((a, b) => a.gap - b.gap)
+                .map(({ role }) => role),
+              'text'
+            ]
+          : []
+        const role = [spec.outOfGamut, ...nearest].find((candidate) => {
+          if (!candidate) {
+            return false
+          }
+          const lifted = readable(core[candidate].color, ratioOf, target)
+          return lightnessOnly(core[candidate].color, lifted)
+        })
+        if (!role) {
+          throw new Error(`${id}: ${token} reaches its floors only by leaving the sRGB gamut (${value} to ${shipped})`)
+        }
+        const neighbor = readable(core[role].color, ratioOf, target)
+        const reason = `Lightness alone reaches its floors only outside the sRGB gamut (${value} to ${shipped}, a hue shift), so it takes the ${spec.outOfGamut === role ? 'neighboring' : 'nearest'} ${role} role, ${core[role].source}${neighbor === core[role].color ? '' : `, lifted in lightness to ${neighbor}`}.`
+        curated = curate('app', token, source, value, role, reason)
+        value = neighbor
       }
     }
-    if (spec.outranks) {
-      const secondary = resolve('--muted-foreground')
-      const outranks = (color) => spec.outranks.every((surface) => contrast(color, resolve(surface)) > contrast(secondary, resolve(surface)))
-      if (!outranks(value)) {
-        const passes = (color) =>
-          color.length === 7 && outranks(color) && (spec.readable ?? []).every((surface) => contrast(color, Array.isArray(surface) ? over(resolve(surface[0]), resolve(surface[1])) : resolve(surface)) >= MIN_TEXT_CONTRAST + MARGIN)
-        const [role] = Object.keys(core)
-          .filter((candidate) => passes(core[candidate].color))
-          .sort((a, b) => fillDistance(value, core[a].color) - fillDistance(value, core[b].color))
-        if (!role) {
-          throw new Error(`${id}: ${token} reads no higher than --muted-foreground on ${spec.outranks.join(', ')}, and no core role does`)
-        }
-        const surface = spec.outranks[0]
-        // Why drop the lightness row: the token no longer ships that color, so the role change
-        // replaces it and names the upstream color.
-        const lightened = records.deviations.findIndex((row) => row.theme === id && row.kind === 'app' && row.name === token)
-        const upstream = lightened === -1 ? value : records.deviations.splice(lightened, 1)[0].upstream
-        curate(
-          'app',
-          token,
-          source,
-          upstream,
-          role,
-          core[role].color,
-          `Secondary text reads ${contrast(secondary, resolve(surface)).toFixed(2)}:1 on ${surface}, above this primary text at ${contrast(value, resolve(surface)).toFixed(2)}:1, so it takes the nearest core role that reads higher, ${role} (${core[role].source}), at ${contrast(core[role].color, resolve(surface)).toFixed(2)}:1.`
-        )
-        value = core[role].color
-      }
+    if (curated) {
+      curated.shipped = value
     }
     tokens[token] = value
     return value
@@ -916,13 +936,6 @@ function build(id, style, records) {
     const ratio = contrast(tokens[surface], tokens[text])
     if (ratio < MIN_TEXT_CONTRAST) {
       fail(`${surface}/${text} is ${ratio.toFixed(2)}:1, under ${MIN_TEXT_CONTRAST}:1`)
-    }
-  }
-  for (const [token, mapping] of Object.entries(APP_TOKENS)) {
-    for (const surface of mapping.outranks ?? []) {
-      if (contrast(tokens[token], tokens[surface]) <= contrast(tokens['--muted-foreground'], tokens[surface])) {
-        fail(`${token} reads no higher than --muted-foreground on ${surface}`)
-      }
     }
   }
   for (const [surface, beneath, text] of PAINTED_PAIRS) {
@@ -954,7 +967,7 @@ function build(id, style, records) {
 
   const editor = tokens['--editor-surface']
   const tokenColors = SYNTAX.map(({ name, from, scope }) => {
-    const { settings: upstreamSettings, color } = syntax[name]
+    const { settings: upstreamSettings, color, curated } = syntax[name]
     const settings = {}
     if (color) {
       const painted = isTranslucent(color) ? over(color, editor) : color.slice(0, 7)
@@ -968,6 +981,9 @@ function build(id, style, records) {
         deviate('syntax', name, from, painted, shipped)
       }
       settings.foreground = shipped
+      if (curated) {
+        curated.shipped = shipped
+      }
     }
     if (upstreamSettings.fontStyle !== undefined) {
       // Why: VS Code reads upstream's "normal" as no style, which Orca writes as "".
@@ -1025,9 +1041,8 @@ function build(id, style, records) {
       `VS Code default terminal.ansi${key[0].toUpperCase()}${key.slice(1)}`,
       vscodeDefault,
       role,
-      terminal[key],
       `Upstream sets no ANSI colors, so VS Code shows its own. ${reason}`
-    )
+    ).shipped = terminal[key]
   }
   const ansi = Object.keys(ANSI).map((key) => terminal[key])
   if (new Set(ansi).size !== ansi.length) {

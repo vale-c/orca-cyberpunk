@@ -116,7 +116,7 @@
     "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
     "upstream": "#65737e",
     "role": "comment",
-    "shipped": "#6766b3",
+    "shipped": "#7271bf",
     "reason": "Quiet Markdown syntax marks take upstream's own comment color."
   },
   {
@@ -196,7 +196,7 @@
     "source": "meta.separator",
     "upstream": "#65737e",
     "role": "comment",
-    "shipped": "#6766b3",
+    "shipped": "#7271bf",
     "reason": "Quiet Markdown syntax marks take upstream's own comment color."
   },
   {
@@ -272,12 +272,22 @@
   {
     "style": "cyberpunk",
     "kind": "app",
+    "name": "--sidebar-foreground",
+    "source": "sideBar.foreground",
+    "upstream": "#b08bff",
+    "role": "comment",
+    "shipped": "#a5a7f9",
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#b08bff to #be9aff, a hue shift), so it takes the nearest comment role, comment, lifted in lightness to #a5a7f9."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "app",
     "name": "--text-link",
     "source": "textLink.foreground",
     "upstream": "#0084ff",
     "role": "info",
     "shipped": "#00c3ff",
-    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
   },
   {
     "style": "cyberpunk",
@@ -287,7 +297,7 @@
     "upstream": "#ff004c",
     "role": "tag",
     "shipped": "#ff5680",
-    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag."
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag."
   },
   {
     "style": "cyberpunk",
@@ -566,7 +576,7 @@
     "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
     "upstream": "#65737e",
     "role": "comment",
-    "shipped": "#6766b3",
+    "shipped": "#7070bd",
     "reason": "Quiet Markdown syntax marks take upstream's own comment color."
   },
   {
@@ -646,7 +656,7 @@
     "source": "meta.separator",
     "upstream": "#65737e",
     "role": "comment",
-    "shipped": "#6766b3",
+    "shipped": "#7070bd",
     "reason": "Quiet Markdown syntax marks take upstream's own comment color."
   },
   {
@@ -722,12 +732,22 @@
   {
     "style": "cyberpunk-umbra",
     "kind": "app",
+    "name": "--sidebar-foreground",
+    "source": "sideBar.foreground",
+    "upstream": "#8b96ff",
+    "role": "blockVariable",
+    "shipped": "#b4baff",
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#8b96ff to #9ca8ff, a hue shift), so it takes the nearest blockVariable role, meta.block variable.other."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "app",
     "name": "--text-link",
     "source": "textLink.foreground",
     "upstream": "#3d5afe",
     "role": "info",
     "shipped": "#00c3ff",
-    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground."
   },
   {
     "style": "cyberpunk-umbra",
@@ -1165,9 +1185,9 @@
     "name": "--popover-foreground",
     "source": "editor.foreground",
     "upstream": "#ff0055",
-    "role": "tag",
-    "shipped": "#ff5680",
-    "reason": "Secondary text reads 5.77:1 on --popover, above this primary text at 5.21:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.68:1."
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff668a, a hue shift), so it takes the nearest text role, foreground."
   },
   {
     "style": "cyberpunk-scarlet",
@@ -1185,19 +1205,9 @@
     "name": "--accent-foreground",
     "source": "list.activeSelectionForeground",
     "upstream": "#ff0055",
-    "role": "tag",
-    "shipped": "#ff5680",
-    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "app",
-    "name": "--sidebar-foreground",
-    "source": "sideBar.foreground",
-    "upstream": "#be4e74",
-    "role": "tag",
-    "shipped": "#ff5680",
-    "reason": "Secondary text reads 5.58:1 on --sidebar, above this primary text at 5.04:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.46:1."
+    "role": "text",
+    "shipped": "#ffffff",
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff668a, a hue shift), so it takes the nearest text role, foreground."
   },
   {
     "style": "cyberpunk-scarlet",
@@ -1206,8 +1216,18 @@
     "source": "sideBar.border",
     "upstream": "#101116",
     "role": "edge",
-    "shipped": "#ff00552a",
+    "shipped": "#32091a",
     "reason": "Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--tab-active-foreground",
+    "source": "tab.activeForeground",
+    "upstream": "#ff0055",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Lightness alone reaches its floors only outside the sRGB gamut (#ff0055 to #ff4572, a hue shift), so it takes the nearest tag role, entity.name.tag."
   },
   {
     "style": "cyberpunk-scarlet",

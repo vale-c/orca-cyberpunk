@@ -130,6 +130,14 @@
   {
     "theme": "cyberpunk-scarlet",
     "kind": "app",
+    "name": "--sidebar-foreground",
+    "source": "sideBar.foreground",
+    "upstream": "#be4e74",
+    "shipped": "#ec779b"
+  },
+  {
+    "theme": "cyberpunk-scarlet",
+    "kind": "app",
     "name": "--tab-inactive-foreground",
     "source": "tab.inactiveForeground",
     "upstream": "#cf4573",
