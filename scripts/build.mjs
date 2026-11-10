@@ -73,11 +73,11 @@ const CORE = {
     'cyberpunk-umbra': 'editorGroupHeader.tabsBackground',
     'cyberpunk-scarlet': 'dropdown.background'
   },
-  // Hairlines: upstream's editor group border. In Cyberpunk it nearly matches the canvas, and its
-  // title bar border equals the quiet fill, so Cyberpunk takes its whitespace guide color.
+  // Hairlines: upstream's editor group border. Cyberpunk's nearly matches its canvas and Umbra's
+  // its sidebar, so both take their whitespace guide color.
   edge: {
     cyberpunk: 'editorWhitespace.foreground',
-    'cyberpunk-umbra': 'editorGroup.border',
+    'cyberpunk-umbra': 'editorWhitespace.foreground',
     'cyberpunk-scarlet': 'editorGroup.border'
   },
   // A dark color in each style's own hue, for ANSI black. Like most themes' black, it may sit
@@ -153,7 +153,16 @@ const APP_TOKENS = {
   '--ring': 'editorCursor.foreground',
   '--sidebar': 'sideBar.background',
   '--sidebar-foreground': { from: 'sideBar.foreground', readable: ['--sidebar', ['--worktree-sidebar-active', '--sidebar']] },
-  '--sidebar-border': 'sideBar.border',
+  '--sidebar-border': {
+    from: 'sideBar.border',
+    over: '--sidebar',
+    curate: {
+      'cyberpunk-scarlet': {
+        to: { core: 'edge' },
+        reason: "Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role."
+      }
+    }
+  },
   '--worktree-sidebar-active': { from: 'list.activeSelectionBackground', keepAlpha: true },
   '--host-badge': 'badge.background',
   '--host-badge-foreground': 'badge.foreground',
@@ -546,7 +555,8 @@ const MIN_FILL_DISTANCE = 0.06
 const FILL_SURFACES = {
   '--accent': ['--background', '--popover', '--sidebar'],
   '--muted': ['--background', '--popover', '--sidebar'],
-  '--border': ['--background', '--muted']
+  '--border': ['--background', '--muted', '--sidebar'],
+  '--sidebar-border': ['--sidebar']
 }
 // Why above Orca's floors: margin so rounding in another color pipeline cannot tip a shade under.
 const MARGIN = 0.05

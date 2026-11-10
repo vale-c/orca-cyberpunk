@@ -199,8 +199,8 @@
       "color": "#372963"
     },
     "edge": {
-      "source": "editorGroup.border",
-      "color": "#1e2c3f"
+      "source": "editorWhitespace.foreground",
+      "color": "#2b3e5a"
     },
     "shade": {
       "source": "sideBar.background",

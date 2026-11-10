@@ -1181,6 +1181,16 @@
   },
   {
     "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--sidebar-border",
+    "source": "sideBar.border",
+    "upstream": "#101116",
+    "role": "edge",
+    "shipped": "#ff00552a",
+    "reason": "Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role."
+  },
+  {
+    "style": "cyberpunk-scarlet",
     "kind": "ansi",
     "name": "black",
     "source": "VS Code default terminal.ansiBlack",

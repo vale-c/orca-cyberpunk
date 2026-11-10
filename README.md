@@ -83,7 +83,7 @@ palette** for each style from upstream's own colors only, by role:
 | method | `entity.name.method.js` | `#6095ff` | `#6095ff` | `#6095ff` |
 | editorLink | `editorLink.activeForeground` | `#3d81fe` | `#3d81fe` | `#3d81fe` |
 | quiet | `panel.background` / `editorGroupHeader.tabsBackground` / `dropdown.background` | `#100d23` | `#372963` | `#002212ec` |
-| edge | `editorWhitespace.foreground` / `editorGroup.border` | `#2b3e5a` | `#1e2c3f` | `#ff00552a` |
+| edge | `editorWhitespace.foreground` / `editorGroup.border` | `#2b3e5a` | `#2b3e5a` | `#ff00552a` |
 | shade | `tab.inactiveBackground` / `sideBar.background` / `sideBarSectionHeader.background` | `#372963` | `#1e1d45` | `#240000` |
 | selection | `editor.selectionBackground` / `editor.selectionHighlightBackground` | `#311b92` | `#311b92` | `#ff00552c` |
 <!-- /generated:core -->
@@ -142,6 +142,7 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
 | Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
+| Scarlet | `--sidebar-border` | `sideBar.border` | `#101116` | `#ff00552a` | edge | Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role. |
 <!-- /generated:roles -->
 
 ### Terminal colors
