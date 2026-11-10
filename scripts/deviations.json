@@ -5,7 +5,7 @@
     "name": "--muted-foreground",
     "source": "tab.inactiveForeground",
     "upstream": "#7877b3",
-    "shipped": "#8585c2"
+    "shipped": "#9696d4"
   },
   {
     "theme": "cyberpunk",
@@ -77,7 +77,7 @@
     "name": "--muted-foreground",
     "source": "tab.inactiveForeground",
     "upstream": "#cf4573",
-    "shipped": "#dd527f"
+    "shipped": "#e35783"
   },
   {
     "theme": "cyberpunk-scarlet",

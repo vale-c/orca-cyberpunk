@@ -137,7 +137,7 @@ const APP_TOKENS = {
   '--muted-foreground': {
     from: 'tab.inactiveForeground',
     over: '--background',
-    readable: ['--background', '--muted', '--popover']
+    readable: ['--background', '--muted', '--popover', '--sidebar', '--accent']
   },
   // Why the suggest widget's selected row: Orca paints --accent for hovered and selected rows on
   // the canvas, in sidebars and inside popovers (command palette, menus, selects). Upstream's list
