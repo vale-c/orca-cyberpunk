@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stablyai/orca/main/docs/schemas/plugins/orca-plugin.v2.schema.json",
+  "manifestVersion": 2,
+  "id": "cyberpunk-theme",
+  "name": "Cyberpunk",
+  "version": "1.0.0",
+  "execution": "data",
+  "description": "Neon Cyberpunk app, code and terminal colors for Orca, in three styles: Cyberpunk, Umbra and Scarlet.",
+  "license": "GPL-3.0",
+  "repository": "https://github.com/vale-c/orca-cyberpunk",
+  "engines": {
+    "orca": ">=1.4.255"
+  },
+  "contributes": {
+    "themes": [
+      { "id": "cyberpunk", "title": "Cyberpunk", "path": "themes/cyberpunk.json" },
+      { "id": "cyberpunk-umbra", "title": "Cyberpunk Umbra", "path": "themes/cyberpunk-umbra.json" },
+      { "id": "cyberpunk-scarlet", "title": "Cyberpunk Scarlet", "path": "themes/cyberpunk-scarlet.json" }
+    ],
+    "terminalThemes": [
+      { "id": "cyberpunk", "title": "Cyberpunk", "path": "terminal/cyberpunk.json" },
+      { "id": "cyberpunk-umbra", "title": "Cyberpunk Umbra", "path": "terminal/cyberpunk-umbra.json" },
+      { "id": "cyberpunk-scarlet", "title": "Cyberpunk Scarlet", "path": "terminal/cyberpunk-scarlet.json" }
+    ]
+  },
+  "capabilities": [],
+  "cover": {
+    "path": "images/cover.png",
+    "alt": "Cyberpunk for Orca: the plugin name and its palette beside Orca's editor in the Cyberpunk, Umbra and Scarlet styles"
+  }
+}
