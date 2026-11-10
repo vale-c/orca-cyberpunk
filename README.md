@@ -140,8 +140,10 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Cyberpunk | `--text-link` | `textLink.foreground` | `#0084ff` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
 | Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
+| Scarlet | `--popover-foreground` | `editor.foreground` | `#ff0055` | `#ff5680` | tag | Secondary text reads 5.77:1 on --popover, above this primary text at 5.21:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.68:1. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
 | Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
+| Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#ff5680` | tag | Secondary text reads 5.58:1 on --sidebar, above this primary text at 5.04:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.46:1. |
 | Scarlet | `--sidebar-border` | `sideBar.border` | `#101116` | `#ff00552a` | edge | Scarlet's sideBar.border is its canvas color, which barely shows on its darker sidebar, so the sidebar's lines take Scarlet's hairline role. |
 <!-- /generated:roles -->
 
@@ -222,7 +224,6 @@ line, which Orca paints with `--accent`. Only the comment color needed a change 
 | Umbra | Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#6766b3` | `#7070bd` |
 | Umbra | Separators | `meta.separator` | `#6766b3` | `#7070bd` |
 | Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e35783` |
-| Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#cc5b80` |
 | Scarlet | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54a78` |
 | Scarlet | `--chat-muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e75c87` |
 | Scarlet | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff2055` |

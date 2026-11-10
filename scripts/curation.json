@@ -1162,6 +1162,16 @@
   {
     "style": "cyberpunk-scarlet",
     "kind": "app",
+    "name": "--popover-foreground",
+    "source": "editor.foreground",
+    "upstream": "#ff0055",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Secondary text reads 5.77:1 on --popover, above this primary text at 5.21:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.68:1."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "app",
     "name": "--primary",
     "source": "button.hoverBackground",
     "upstream": "#00ff9c",
@@ -1178,6 +1188,16 @@
     "role": "tag",
     "shipped": "#ff5680",
     "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--sidebar-foreground",
+    "source": "sideBar.foreground",
+    "upstream": "#be4e74",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Secondary text reads 5.58:1 on --sidebar, above this primary text at 5.04:1, so it takes the nearest core role that reads higher, tag (entity.name.tag), at 6.46:1."
   },
   {
     "style": "cyberpunk-scarlet",
