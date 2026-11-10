@@ -1,7 +1,7 @@
 {
   "--card": "Follows --background, the editor canvas. VS Code uses upstream's panel.background only for its bottom panel: a darker step in Cyberpunk (#100d23 under #261d45), a near step in Umbra (#131341) and the canvas itself in Scarlet, so it marks no card surface.",
   "--card-foreground": "Follows --foreground, upstream's white workbench foreground.",
-  "--secondary": "Upstream sets no secondary button color. Orca follows --muted, upstream's input.background.",
+  "--secondary": "Upstream sets no secondary button color. Orca follows --muted, the style's quiet fill: panel.background in Cyberpunk, the tab strip in Umbra and dropdown.background in Scarlet.",
   "--secondary-foreground": "Upstream sets no secondary button color. Orca follows --foreground, upstream's workbench text.",
   "--input": "Follows --border. Upstream's input.border is the full mint accent in Cyberpunk and Umbra and a strong blue (#00a2ff) in Scarlet, which would put a strong color on every idle field. Orca shows a focused field with --ring, upstream's cursor color.",
   "--chart-1": "Upstream sets no charts.* color. Orca follows --primary, the style's accent button color.",
