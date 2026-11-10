@@ -27,12 +27,13 @@ yellow numbers, mint types and pink tags. Each theme also sets the 16 ANSI color
 
 ## Install
 
-Find **Cyberpunk** in Orca's plugin directory and install it. It needs Orca 1.4.255 or later. To
+Find **Cyberpunk for Orca** in Orca's plugin directory and install it. It needs Orca 1.4.255 or later. To
 install it from this repository instead:
 
 1. In Orca, open Settings → Plugins.
 2. Open **Add plugin** → **From a Git URL…**.
-3. Enter `https://github.com/vale-c/orca-cyberpunk.git` with ref `main`, and install **Cyberpunk**.
+3. Enter `https://github.com/vale-c/orca-cyberpunk.git` with ref `main`, and install
+   **Cyberpunk for Orca**.
 4. In Settings → Appearance, pick **Cyberpunk**, **Cyberpunk Umbra** or **Cyberpunk Scarlet** as
    the dark theme. Pick the terminal theme of the same name in the terminal settings.
 
@@ -77,6 +78,9 @@ palette** for each style from upstream's own colors only, by role:
 | warning | `inputValidation.warningBorder` | `#ff9100` | `#ff9100` | `#ff9100` |
 | cyan | `editorLineNumber.activeForeground` | `#00ffc8` | `#00ffc8` | `#00ffc8` |
 | green | `peekView.border` | `#00e676` | `#00e676` | `#00e676` |
+| lime | `terminalCursor.foreground` | `#9dff00` | `#9dff00` | `#9dff00` |
+| quiet | `panel.background` / `dropdown.background` | `#100d23` | `#131341` | `#002212ec` |
+| edge | `titleBar.border` / `editorGroup.border` | `#100d23` | `#1e2c3f` | `#ff00552a` |
 | shade | `tab.inactiveBackground` / `sideBar.background` / `sideBarSectionHeader.background` | `#372963` | `#1e1d45` | `#240000` |
 | selection | `editor.selectionBackground` / `editor.selectionHighlightBackground` | `#311b92` | `#311b92` | `#ff00552c` |
 
@@ -103,7 +107,7 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Escape characters | `constant.character.escape` | `#89ddff` | `#00ffc8` | cyan | Escapes read as part of a string pattern, so they take the same cyan as regular expressions. |
 | JSON keys | `source.json meta.structure.dictionary.json support.type.property-name.json` | `#c792ea` | `#d57bff` | keyword | The top-level key color takes upstream's own violet, the hue nearest the Material purple. Orca reads no nested-key selectors, so this is the only key level that ships. |
 | Markdown text | `text.html.markdown` | `#eeffff` | `#ffffff` | text | Markdown prose reads as text: upstream's own text color is its workbench foreground. |
-| Heading marks | `markup.heading.markdown punctuation.definition.heading.markdown` | `#c3e88d` | `#76c1ff` | string | The # marks take the heading color that upstream's own String rule gives markup.heading. |
+| Heading marks | `markup.heading.markdown punctuation.definition.heading.markdown` | `#c3e88d` | `#00ff9c` | type | The # marks take the mint that upstream's own entity.name rule gives the heading text. |
 | Inline code | `text.html.markdown markup.inline.raw.markdown` | `#c792ea` | `#d57bff` | keyword | Inline code takes upstream's own violet, the hue nearest the Material purple. |
 | Inline code punctuation | `text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown` | `#65737e` | `#6766b3` | comment | Quiet Markdown syntax marks take upstream's own comment color. |
 | Italic | `markup.italic` | `#f07178` | `#ff5680` | tag | Emphasis takes upstream's own pink, the tag color, the hue nearest the Material red. |
@@ -138,7 +142,13 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 Upstream sets the terminal's foreground and cursor, and no ANSI color, so VS Code shows its own
 defaults. Each ANSI slot takes the core role that plays its part instead, so all 16 colors are
 distinct and come from the style. The terminal background is `panel.background`, where VS Code
-draws the terminal, and the selection is the core selection role.
+draws the terminal, and the selection is the core selection role. A colored slot must stay at
+least 0.06 from the terminal foreground in OKLab, the same floor as the fills below, or text in
+that color would read as plain output. Three slots fail that with their first role and take a
+fallback. Cyberpunk's cyan equals its teal foreground `#00ffc8` and takes info `#00c3ff`.
+Scarlet's blue is 0.038 from its foreground `#00a2ff` and takes info. The mint bright green is
+0.057 from Cyberpunk's foreground and 0.054 from Umbra's `#00ff6a`, so it takes the lime of
+upstream's terminal cursor, `#9dff00`.
 
 | Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- | --- |
@@ -146,13 +156,13 @@ draws the terminal, and the selection is the core selection role.
 | red | `#cd3131` | error | `#ff004c` | `#ff004c` | `#ff004c` |
 | green | `#0dbc79` | green | `#00e676` | `#00e676` | `#00e676` |
 | yellow | `#e5e510` | warning | `#ff9100` | `#ff9100` | `#ff9100` |
-| blue | `#2472c8` | function | `#00b0ff` | `#00b0ff` | `#00b0ff` |
+| blue | `#2472c8` | function (Scarlet: info) | `#00b0ff` | `#00b0ff` | `#00c3ff` |
 | magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` |
-| cyan | `#11a8cd` | cyan | `#00ffc8` | `#00ffc8` | `#00ffc8` |
+| cyan | `#11a8cd` | cyan (Cyberpunk: info) | `#00c3ff` | `#00ffc8` | `#00ffc8` |
 | white | `#e5e5e5` | blockVariable | `#b4baff` | `#b4baff` | `#b4baff` |
 | brightBlack | `#666666` | comment | `#6766b3` | `#6766b3` | `#6766b3` |
 | brightRed | `#f14c4c` | tag | `#ff5680` | `#ff5680` | `#ff5680` |
-| brightGreen | `#23d18b` | type | `#00ff9c` | `#00ff9c` | `#00ff9c` |
+| brightGreen | `#23d18b` | type (Cyberpunk and Umbra: lime) | `#9dff00` | `#9dff00` | `#00ff9c` |
 | brightYellow | `#f5f543` | number | `#fffc58` | `#fffc58` | `#fffc58` |
 | brightBlue | `#3b8eea` | string | `#76c1ff` | `#76c1ff` | `#76c1ff` |
 | brightMagenta | `#d670d6` | attribute | `#ee6dff` | `#ee6dff` | `#ee6dff` |
@@ -179,7 +189,7 @@ color needed a change.
 | Umbra | `--chat-muted-foreground` | `tab.inactiveForeground` | `#7877b3` | `#8585c2` |
 | Umbra | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff1d53` |
 | Umbra | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#3b5293` | `#516aae` |
-| Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54b78` |
+| Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#dd527f` |
 | Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#cc5b80` |
 | Scarlet | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54a78` |
 | Scarlet | `--chat-muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e75c87` |
@@ -209,6 +219,15 @@ selected row text take the tag pink `#ff5680`.
   popovers use, and in Scarlet `list.hoverBackground` equals the canvas. The build fails when
   `--accent` is less than 0.06 from `--background`, `--popover` or `--sidebar` in OKLab. Orca also
   draws the editor's current line with `--accent`, so it takes this color too.
+- Quiet fills (`--muted`) use `panel.background` in Cyberpunk and Umbra and `dropdown.background`
+  in Scarlet. Upstream's `input.background` equals the hover widget color in Cyberpunk and Umbra,
+  so the command palette's input band and pinned rows vanished inside popovers, and Scarlet's
+  input color was 0.031 from its canvas. Scarlet's panel is its canvas, so it takes its dropdown
+  fill. The build fails when `--muted` is less than 0.06 from `--background` or `--popover`.
+  Scarlet's secondary text is lightened to `#dd527f` (was `#d54b78`) to read 4.5:1 on that fill.
+- Hairlines (`--border`) use `editorGroup.border` in Umbra and Scarlet and `titleBar.border` in
+  Cyberpunk, where the group border `#1e2c3f` is 0.052 from the canvas and idle inputs barely
+  showed. The build fails when `--border` is less than 0.06 from `--background`.
 - Input borders follow `--border`. Upstream's `input.border` is the full mint accent in Cyberpunk
   and Umbra (Scarlet's is blue `#00a2ff`), which would put a strong color on every idle field. A
   focused field shows the focus ring.
@@ -228,18 +247,30 @@ selected row text take the tag pink `#ff5680`.
   upstream sets no diff overview color. The diff tints keep upstream's `diffEditor` colors with
   their alpha.
 - Orca requires opaque surfaces, so translucent upstream surfaces (hover widgets, inputs, list
-  selection, the Scarlet selection) are painted onto the editor canvas. The workspace row and the diff tints keep
-  their alpha, because Orca paints them over a surface.
+  selection, Scarlet's dropdown fill and selection, the Umbra and Scarlet borders) are painted
+  onto the editor canvas. The workspace row and the diff tints keep their alpha, because Orca
+  paints them over a surface.
 - Orca reads no descendant selectors (`a b`), so a rule that uses only those ships under the plain
   scope it ends with, when one exists: CSS property names, HTML attributes, the top JSON key
   level, Markdown heading marks, inline code and inline code punctuation. The rest of upstream's
   scopes are left out. They fall in these groups: descendant selectors with no plain equivalent
   (nested JSON keys, nested bold and italic, scoped variables, methods and decorators), glob
-  scopes (`*url*`), scopes of tools Orca does not run (`markup.*.git_gutter`), and misspelled
-  scopes that match nothing. `SYNTAX` in `scripts/build.mjs` is the full list of what ships.
+  scopes (`*url*`), scopes of tools Orca does not run (`markup.*.git_gutter`), misspelled scopes
+  that match nothing, scopes a shorter shipped scope already gives the same color
+  (`punctuation.definition.tag.*.html` under `punctuation.definition.tag`), and scopes a leftover
+  rule spreads onto unrelated code (`punctuation.section.class.end` in the fenced-code rule).
+  `SYNTAX` in `scripts/build.mjs` is the full list of what ships.
+- Orca's built-in CSS and HTML tokenizers emit `attribute.name` for CSS property names and HTML
+  attributes, which Orca colors by `entity.other.attribute-name`, upstream's magenta. The CSS
+  property name and HTML attribute rows therefore apply only to plugin grammars that emit those
+  scopes. Its JSON tokenizer emits `string.key.json`, which Orca colors by
+  `support.type.property-name`, so the JSON keys row also ships that plain scope. Before, JSON
+  keys showed mint through `support.type`.
 - Upstream's Markdown heading rule writes `markup.heading | markup.heading entity.name` as one
-  selector, which VS Code never matches. Headings therefore keep the sky blue of upstream's own
-  String rule, as they do in VS Code.
+  selector, which VS Code never matches. Heading text is `entity.name.section.markdown`, which
+  upstream's `entity.name` rule colors mint, in VS Code and in Orca alike. The `#` marks take the
+  same mint (they were sky blue). The sky blue of upstream's String rule stays on `markup.heading`
+  for heading parts with no more specific scope.
 - Upstream's string and heading rules set the font style `normal`, which VS Code reads as no
   style. Orca writes that as `""`. Upstream's `strike` font style for `markup.strike` is not an
   Orca style, and the rule sets no color, so it is left out.
