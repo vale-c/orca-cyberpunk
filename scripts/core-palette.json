@@ -1,9 +1,5 @@
 {
   "cyberpunk": {
-    "canvas": {
-      "source": "editor.background",
-      "color": "#261d45"
-    },
     "text": {
       "source": "foreground",
       "color": "#ffffff"
@@ -90,10 +86,6 @@
     }
   },
   "cyberpunk-umbra": {
-    "canvas": {
-      "source": "editor.background",
-      "color": "#100d23"
-    },
     "text": {
       "source": "foreground",
       "color": "#ffffff"
@@ -180,10 +172,6 @@
     }
   },
   "cyberpunk-scarlet": {
-    "canvas": {
-      "source": "editor.background",
-      "color": "#101116"
-    },
     "text": {
       "source": "foreground",
       "color": "#ffffff"

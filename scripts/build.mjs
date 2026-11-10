@@ -40,7 +40,6 @@ const LEFTOVERS = {
 // `{ syntax }` the foreground upstream's own rules give that selector, and `{ <style id>: ref }`
 // a different source per style.
 const CORE = {
-  canvas: 'editor.background',
   text: 'foreground',
   // The color each style is known by: mint for Cyberpunk and Umbra, scarlet for Scarlet.
   accent: 'editor.foreground',
@@ -158,8 +157,7 @@ const APP_TOKENS = {
   // upstream's own diffEditor colors.
   '--diff-added': {
     from: { core: 'success' },
-    chat: { mixForeground: 30, on: [['--diff-added-background', 'canvas'], ['--diff-added-background', 'codeBlock']] },
-    outOfGamut: 'type'
+    chat: { mixForeground: 30, on: [['--diff-added-background', 'canvas'], ['--diff-added-background', 'codeBlock']] }
   },
   '--diff-added-background': { from: 'diffEditor.insertedTextBackground', keepAlpha: true },
   '--diff-added-emphasis': { from: 'diffEditor.insertedTextBackground', keepAlpha: true },
