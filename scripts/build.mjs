@@ -60,8 +60,6 @@ const CORE = {
   warning: 'inputValidation.warningBorder',
   cyan: 'editorLineNumber.activeForeground',
   green: 'peekView.border',
-  // A dark color in each style's own hue, for ANSI black. Like most themes' black, it may sit
-  // close to the terminal background.
   lime: 'terminalCursor.foreground',
   method: { syntax: 'entity.name.method.js' },
   editorLink: 'editorLink.activeForeground',
@@ -79,6 +77,8 @@ const CORE = {
     'cyberpunk-umbra': 'editorGroup.border',
     'cyberpunk-scarlet': 'editorGroup.border'
   },
+  // A dark color in each style's own hue, for ANSI black. Like most themes' black, it may sit
+  // close to the terminal background.
   shade: {
     cyberpunk: 'tab.inactiveBackground',
     'cyberpunk-umbra': 'sideBar.background',
