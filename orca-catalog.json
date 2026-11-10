@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stablyai/orca/main/docs/schemas/plugins/orca-catalog.v2.schema.json",
+  "catalogVersion": 2,
+  "name": "Cyberpunk for Orca",
+  "owner": "vale-c",
+  "plugins": [
+    {
+      "id": "vale-c.cyberpunk",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/vale-c/orca-cyberpunk.git",
+        "ref": "main"
+      },
+      "description": "Neon Cyberpunk app, code and terminal colors for Orca, in three styles: Cyberpunk, Umbra and Scarlet.",
+      "categories": [
+        "themes",
+        "terminal-themes"
+      ],
+      "releases": [
+        {
+          "version": "1.0.0",
+          "commit": "e4e3ca0fc222e48513a2a8b61555779ff4d882df",
+          "contentHash": "660377efa512aad49b80fafcfabc28b1dda094cd77ab5d37856d0e5d18a74d5a",
+          "execution": "data",
+          "minimumOrca": "1.4.255",
+          "name": "Cyberpunk for Orca",
+          "contributes": [
+            {
+              "kind": "themes",
+              "name": "Cyberpunk"
+            },
+            {
+              "kind": "themes",
+              "name": "Cyberpunk Umbra"
+            },
+            {
+              "kind": "themes",
+              "name": "Cyberpunk Scarlet"
+            },
+            {
+              "kind": "terminalThemes",
+              "name": "Cyberpunk"
+            },
+            {
+              "kind": "terminalThemes",
+              "name": "Cyberpunk Umbra"
+            },
+            {
+              "kind": "terminalThemes",
+              "name": "Cyberpunk Scarlet"
+            }
+          ],
+          "images": {
+            "cover": {
+              "path": "images/cover.png",
+              "alt": "Cyberpunk for Orca: the plugin name and its palette beside Orca's editor in the Cyberpunk, Umbra and Scarlet styles",
+              "sha256": "caa9c37729ea204dded8b0c7e87db09c1c908085fe23d9eea37ef34224c06cc9",
+              "width": 1600,
+              "height": 1000
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
