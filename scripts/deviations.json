@@ -32,6 +32,46 @@
     "shipped": "#9965ca"
   },
   {
+    "theme": "cyberpunk",
+    "kind": "syntax",
+    "name": "Comments",
+    "source": "comment",
+    "upstream": "#6766b3",
+    "shipped": "#7271bf"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "syntax",
+    "name": "Inline code punctuation",
+    "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7271bf"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "syntax",
+    "name": "Fence punctuation",
+    "source": "punctuation.definition.fenced.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7271bf"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "syntax",
+    "name": "Fence language",
+    "source": "variable.language.fenced.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7271bf"
+  },
+  {
+    "theme": "cyberpunk",
+    "kind": "syntax",
+    "name": "Separators",
+    "source": "meta.separator",
+    "upstream": "#6766b3",
+    "shipped": "#7271bf"
+  },
+  {
     "theme": "cyberpunk-umbra",
     "kind": "app",
     "name": "--muted-foreground",
@@ -70,6 +110,46 @@
     "source": "gitDecoration.ignoredResourceForeground",
     "upstream": "#3b5293",
     "shipped": "#516aae"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Comments",
+    "source": "comment",
+    "upstream": "#6766b3",
+    "shipped": "#7070bd"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Inline code punctuation",
+    "source": "text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7070bd"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Fence punctuation",
+    "source": "punctuation.definition.fenced.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7070bd"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Fence language",
+    "source": "variable.language.fenced.markdown",
+    "upstream": "#6766b3",
+    "shipped": "#7070bd"
+  },
+  {
+    "theme": "cyberpunk-umbra",
+    "kind": "syntax",
+    "name": "Separators",
+    "source": "meta.separator",
+    "upstream": "#6766b3",
+    "shipped": "#7070bd"
   },
   {
     "theme": "cyberpunk-scarlet",

@@ -892,7 +892,9 @@ function build(id, style, records) {
     const settings = {}
     if (color) {
       const painted = isTranslucent(color) ? over(color, editor) : color.slice(0, 7)
-      const shipped = readable(painted, (candidate) => contrast(candidate, editor), MIN_SYNTAX_CONTRAST + MARGIN)
+      // Why --accent too: Orca paints the editor's current line with it.
+      const ratioOf = (candidate) => Math.min(contrast(candidate, editor), contrast(candidate, tokens['--accent']))
+      const shipped = readable(painted, ratioOf, MIN_SYNTAX_CONTRAST + MARGIN)
       if (!lightnessOnly(painted, shipped)) {
         throw new Error(`${id}: ${name} reaches ${MIN_SYNTAX_CONTRAST}:1 only by leaving the sRGB gamut`)
       }
