@@ -561,7 +561,7 @@ const MIN_FILL_DISTANCE = 0.06
 const FILL_SURFACES = {
   '--accent': ['--background', '--popover', '--sidebar'],
   '--muted': ['--background', '--popover', '--sidebar'],
-  '--border': ['--background', '--muted', '--sidebar'],
+  '--border': ['--background', '--muted', '--sidebar', '--popover'],
   '--sidebar-border': ['--sidebar']
 }
 // Why above Orca's floors: margin so rounding in another color pipeline cannot tip a shade under.
