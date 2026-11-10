@@ -79,6 +79,8 @@ palette** for each style from upstream's own colors only, by role:
 | cyan | `editorLineNumber.activeForeground` | `#00ffc8` | `#00ffc8` | `#00ffc8` |
 | green | `peekView.border` | `#00e676` | `#00e676` | `#00e676` |
 | lime | `terminalCursor.foreground` | `#9dff00` | `#9dff00` | `#9dff00` |
+| method | `entity.name.method.js` | `#6095ff` | `#6095ff` | `#6095ff` |
+| editorLink | `editorLink.activeForeground` | `#3d81fe` | `#3d81fe` | `#3d81fe` |
 | quiet | `panel.background` / `dropdown.background` | `#100d23` | `#131341` | `#002212ec` |
 | edge | `titleBar.border` / `editorGroup.border` | `#100d23` | `#1e2c3f` | `#ff00552a` |
 | shade | `tab.inactiveBackground` / `sideBar.background` / `sideBarSectionHeader.background` | `#372963` | `#1e1d45` | `#240000` |
@@ -142,13 +144,25 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 Upstream sets the terminal's foreground and cursor, and no ANSI color, so VS Code shows its own
 defaults. Each ANSI slot takes the core role that plays its part instead, so all 16 colors are
 distinct and come from the style. The terminal background is `panel.background`, where VS Code
-draws the terminal, and the selection is the core selection role. A colored slot must stay at
-least 0.06 from the terminal foreground in OKLab, the same floor as the fills below, or text in
-that color would read as plain output. Three slots fail that with their first role and take a
-fallback. Cyberpunk's cyan equals its teal foreground `#00ffc8` and takes info `#00c3ff`.
-Scarlet's blue is 0.038 from its foreground `#00a2ff` and takes info. The mint bright green is
-0.057 from Cyberpunk's foreground and 0.054 from Umbra's `#00ff6a`, so it takes the lime of
-upstream's terminal cursor, `#9dff00`.
+draws the terminal, and the selection is the core selection role.
+
+The colored slots (all but black, white, bright black and bright white) must stay at least 0.06
+from the terminal foreground in OKLab, the same floor as the fills below, or text in that color
+would read as plain output. They must also stay 0.06 from each other, so no two read as one
+color. A normal and bright pair of one name (red and bright red, and so on) is exempt, because
+by terminal convention the bright color is a lighter version of the same color. The build
+assigns the slots in table order, cyan before blue. Each slot takes the first of its roles that
+passes, and a fallback role must also read at 4.5:1 on the terminal background:
+
+- Cyberpunk's cyan equals its teal foreground `#00ffc8`, so it takes info `#00c3ff` (9.29:1).
+  Its blue, function `#00b0ff`, is then 0.053 from that cyan, so it takes upstream's editor link
+  blue `#3d81fe` (5.23:1). Its bright blue, string `#76c1ff`, is 0.055 from the cyan, so it takes
+  upstream's method blue `#6095ff` (6.56:1).
+- Scarlet's blue, function, is 0.038 from its foreground `#00a2ff`, so it takes info `#00c3ff`
+  (9.20:1). Its bright green, type `#00ff9c`, is 0.057 from its cyan `#00ffc8`, so it takes the
+  lime of upstream's terminal cursor, `#9dff00` (15.03:1).
+- The mint bright green is 0.057 from Cyberpunk's foreground and 0.054 from Umbra's `#00ff6a`,
+  so both take the lime `#9dff00` (15.16:1 and 13.98:1).
 
 | Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- | --- |
@@ -156,15 +170,15 @@ upstream's terminal cursor, `#9dff00`.
 | red | `#cd3131` | error | `#ff004c` | `#ff004c` | `#ff004c` |
 | green | `#0dbc79` | green | `#00e676` | `#00e676` | `#00e676` |
 | yellow | `#e5e510` | warning | `#ff9100` | `#ff9100` | `#ff9100` |
-| blue | `#2472c8` | function (Scarlet: info) | `#00b0ff` | `#00b0ff` | `#00c3ff` |
 | magenta | `#bc3fbc` | keyword | `#d57bff` | `#d57bff` | `#d57bff` |
 | cyan | `#11a8cd` | cyan (Cyberpunk: info) | `#00c3ff` | `#00ffc8` | `#00ffc8` |
+| blue | `#2472c8` | function (Cyberpunk: editorLink, Scarlet: info) | `#3d81fe` | `#00b0ff` | `#00c3ff` |
 | white | `#e5e5e5` | blockVariable | `#b4baff` | `#b4baff` | `#b4baff` |
 | brightBlack | `#666666` | comment | `#6766b3` | `#6766b3` | `#6766b3` |
 | brightRed | `#f14c4c` | tag | `#ff5680` | `#ff5680` | `#ff5680` |
-| brightGreen | `#23d18b` | type (Cyberpunk and Umbra: lime) | `#9dff00` | `#9dff00` | `#00ff9c` |
+| brightGreen | `#23d18b` | type (all three: lime) | `#9dff00` | `#9dff00` | `#9dff00` |
 | brightYellow | `#f5f543` | number | `#fffc58` | `#fffc58` | `#fffc58` |
-| brightBlue | `#3b8eea` | string | `#76c1ff` | `#76c1ff` | `#76c1ff` |
+| brightBlue | `#3b8eea` | string (Cyberpunk: method) | `#6095ff` | `#76c1ff` | `#76c1ff` |
 | brightMagenta | `#d670d6` | attribute | `#ee6dff` | `#ee6dff` | `#ee6dff` |
 | brightCyan | `#29b8db` | property | `#98e3ff` | `#98e3ff` | `#98e3ff` |
 | brightWhite | `#e5e5e5` | text | `#ffffff` | `#ffffff` | `#ffffff` |
