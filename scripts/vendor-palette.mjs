@@ -38,6 +38,7 @@ function parseJsonc(text) {
     if (char === '"') {
       const start = i
       for (i++; text[i] !== '"'; i++) {
+        if (i >= text.length) throw new Error(`unclosed string at offset ${start}`)
         if (text[i] === '\\') i++
       }
       out += text.slice(start, i + 1)
@@ -45,12 +46,18 @@ function parseJsonc(text) {
       while (i < text.length && text[i] !== '\n') i++
       out += '\n'
     } else if (char === '/' && text[i + 1] === '*') {
-      i = text.indexOf('*/', i + 2) + 1
+      const close = text.indexOf('*/', i + 2)
+      if (close === -1) throw new Error(`unclosed comment at offset ${i}`)
+      i = close + 1
+    } else if (char === '}' || char === ']') {
+      // Why: drops a trailing comma before the close. Strings and comments are already out of
+      // `out`'s tail, so this comma is always structural.
+      out = `${out.replace(/,(\s*)$/, '$1')}${char}`
     } else {
       out += char
     }
   }
-  return JSON.parse(out.replace(/,(\s*[}\]])/g, '$1'))
+  return JSON.parse(out)
 }
 
 const manifest = parseJsonc(readFileSync(path.join(upstream, 'package.json'), 'utf8'))
