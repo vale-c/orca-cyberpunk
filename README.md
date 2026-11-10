@@ -64,7 +64,6 @@ palette** for each style from upstream's own colors only, by role:
 | comment | `comment` | `#6766b3` | `#6766b3` | `#6766b3` |
 | keyword | `keyword` | `#d57bff` | `#d57bff` | `#d57bff` |
 | function | `entity.name.function` | `#00b0ff` | `#00b0ff` | `#00b0ff` |
-| method | `entity.name.method.js` | `#6095ff` | `#6095ff` | `#6095ff` |
 | string | `string` | `#76c1ff` | `#76c1ff` | `#76c1ff` |
 | number | `constant.numeric` | `#fffc58` | `#fffc58` | `#fffc58` |
 | type | `support.class` | `#00ff9c` | `#00ff9c` | `#00ff9c` |
@@ -80,7 +79,7 @@ palette** for each style from upstream's own colors only, by role:
 | cyan | `editorLineNumber.activeForeground` | `#00ffc8` | `#00ffc8` | `#00ffc8` |
 | green | `peekView.border` | `#00e676` | `#00e676` | `#00e676` |
 | shade | `tab.inactiveBackground` / `sideBar.background` / `sideBarSectionHeader.background` | `#372963` | `#1e1d45` | `#240000` |
-| selection | `editor.selectionBackground` / `editor.selectionHighlightBackground` | `#311b92` | `#311b92` | `#390e21` |
+| selection | `editor.selectionBackground` / `editor.selectionHighlightBackground` | `#311b92` | `#311b92` | `#ff00552c` |
 
 A leftover color never ships. The rule or token that carries one takes the core color with the
 same role. `scripts/curation.json` records each change, and `scripts/core-palette.json` the core
@@ -133,15 +132,13 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
-| Scarlet | `--chat-selection` | `editor.selectionBackground` | `#000000` | `#390e21` | selection | Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches. |
-| Scarlet | `terminal selectionBackground` | `editor.selectionBackground` | `#000000` | `#390e21` | selection | Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches. |
 
 ### Terminal colors
 
 Upstream sets the terminal's foreground and cursor, and no ANSI color, so VS Code shows its own
 defaults. Each ANSI slot takes the core role that plays its part instead, so all 16 colors are
 distinct and come from the style. The terminal background is `panel.background`, where VS Code
-draws the terminal, and the selection is `editor.selectionBackground`, as VS Code paints it.
+draws the terminal, and the selection is the core selection role.
 
 | Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- | --- |
@@ -210,6 +207,10 @@ pink `#ff5680`.
   `list.hoverBackground` equals its canvas. Cyberpunk and Umbra use one color for both.
 - Input borders follow `--border`. Upstream's `input.border` is the full accent, which would put
   the strongest color on every idle field. A focused field shows the focus ring.
+- The chat and terminal selection take the core selection role. For Cyberpunk and Umbra that is
+  `editor.selectionBackground`, as VS Code paints it. Scarlet's `editor.selectionBackground` is
+  `#000000`, which barely shows on its `#101116` canvas, so Scarlet takes its own selection
+  highlight, `editor.selectionHighlightBackground` (`#ff00552c`, `#390e21` on the canvas).
 - Focus rings, the editor cursor and the editor selection use `editorCursor.foreground`. Orca draws
   the cursor and a 30% selection from the ring color. Upstream sets no `focusBorder`.
 - The active tab line is `panelTitle.activeBorder`. Cyberpunk and Umbra set no
@@ -220,14 +221,15 @@ pink `#ff5680`.
   upstream sets no diff overview color. The diff tints keep upstream's `diffEditor` colors with
   their alpha.
 - Orca requires opaque surfaces, so translucent upstream surfaces (hover widgets, inputs, list
-  selection, buttons) are painted onto the editor canvas. The workspace row and the diff tints keep
+  selection, the Scarlet selection) are painted onto the editor canvas. The workspace row and the diff tints keep
   their alpha, because Orca paints them over a surface.
-- Orca reads no descendant selectors (`a b`), so rules that use only those ship under the plain
-  scope they end with: CSS property names, HTML attributes, the top JSON key level and Markdown
-  inline code. Upstream rules with no plain equivalent are left out: JSON key levels 1 to 8,
-  `meta.block variable.other`, the Sass id rule, the JavaScript decorator and bind operator rules,
-  the string placeholder rule and the blockquote mark. The `*url*` rule is a glob, and the
-  `markup.*.git_gutter` rules color a Sublime Text plugin, so they are left out too.
+- Orca reads no descendant selectors (`a b`), so a rule that uses only those ships under the plain
+  scope it ends with, when one exists: CSS property names, HTML attributes, the top JSON key
+  level, Markdown heading marks, inline code and inline code punctuation. The rest of upstream's
+  scopes are left out. They fall in these groups: descendant selectors with no plain equivalent
+  (nested JSON keys, nested bold and italic, scoped variables, methods and decorators), glob
+  scopes (`*url*`), scopes of tools Orca does not run (`markup.*.git_gutter`), and misspelled
+  scopes that match nothing. `SYNTAX` in `scripts/build.mjs` is the full list of what ships.
 - Upstream's Markdown heading rule writes `markup.heading | markup.heading entity.name` as one
   selector, which VS Code never matches. Headings therefore keep the sky blue of upstream's own
   String rule, as they do in VS Code.
