@@ -58,7 +58,6 @@ palette** for each style from upstream's own colors only, by role:
 
 | Role | Upstream source | Cyberpunk | Umbra | Scarlet |
 | --- | --- | --- | --- | --- |
-| canvas | `editor.background` | `#261d45` | `#100d23` | `#101116` |
 | text | `foreground` | `#ffffff` | `#ffffff` | `#ffffff` |
 | accent | `editor.foreground` | `#00ff9c` | `#00ff9c` | `#ff0055` |
 | comment | `comment` | `#6766b3` | `#6766b3` | `#6766b3` |
@@ -131,6 +130,7 @@ The same rule changes in every style. Only additions differ: Scarlet's success c
 | Cyberpunk | `--text-link` | `textLink.foreground` | `#0084ff` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#0084ff to #33a0ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
 | Cyberpunk | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff5680` | tag | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff004c to #ff4f70, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Umbra | `--text-link` | `textLink.foreground` | `#3d5afe` | `#00c3ff` | info | Lightness alone reaches 4.5:1 only outside the sRGB gamut (#3d5afe to #4d71ff, a hue shift), so it takes the neighboring info role, gitDecoration.modifiedResourceForeground. |
+| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff5680` | tag | Lightness alone reaches 4.5:1 on the selected row only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag. |
 | Scarlet | `--primary` | `button.hoverBackground` | `#00ff9c` | `#ff0055` | accent | Scarlet copies Cyberpunk's mint button colors unchanged. Its own action color is its editor.foreground #ff0055, which it also uses for tab.activeBorder and panelTitle.activeBorder. |
 
 ### Terminal colors
@@ -180,17 +180,16 @@ color needed a change.
 | Umbra | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff1d53` |
 | Umbra | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#3b5293` | `#516aae` |
 | Scarlet | `--muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54b78` |
-| Scarlet | `--accent-foreground` | `list.activeSelectionForeground` | `#ff0055` | `#ff215e` |
 | Scarlet | `--sidebar-foreground` | `sideBar.foreground` | `#be4e74` | `#cc5b80` |
 | Scarlet | `--tab-inactive-foreground` | `tab.inactiveForeground` | `#cf4573` | `#d54a78` |
 | Scarlet | `--chat-muted-foreground` | `tab.inactiveForeground` | `#cf4573` | `#e75c87` |
 | Scarlet | `--diff-removed` | `gitDecoration.deletedResourceForeground (error)` | `#ff004c` | `#ff2055` |
 | Scarlet | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#70243d` | `#94455c` |
 
-Three colors reach their floor only by leaving the sRGB gamut, which would shift their hue. They
+Four colors reach their floor only by leaving the sRGB gamut, which would shift their hue. They
 take the core color of a neighboring role instead, as the role changes table shows: the links of
-Cyberpunk and Umbra take the info blue `#00c3ff`, and Cyberpunk's diff removal hue takes the tag
-pink `#ff5680`.
+Cyberpunk and Umbra take the info blue `#00c3ff`, and Cyberpunk's diff removal hue and Scarlet's
+selected row text take the tag pink `#ff5680`.
 
 ### Other differences
 
@@ -203,10 +202,18 @@ pink `#ff5680`.
 - Secondary text uses `tab.inactiveForeground`, upstream's color for inactive tabs, inactive panel
   titles and peek results. Upstream sets no `descriptionForeground`. Its line number color is not
   used, because Cyberpunk's `#9f5fff` leaves the sRGB gamut before it reaches 4.5:1.
-- Hover and selected rows use `list.activeSelectionBackground`, because Scarlet's
-  `list.hoverBackground` equals its canvas. Cyberpunk and Umbra use one color for both.
-- Input borders follow `--border`. Upstream's `input.border` is the full accent, which would put
-  the strongest color on every idle field. A focused field shows the focus ring.
+- Hover and selected rows (`--accent`) use `editorSuggestWidget.selectedBackground`, the color
+  upstream draws for the selected row of its suggest popover. Orca paints this fill on the canvas,
+  in the sidebars and inside the command palette, menus and selects. Upstream's list colors would
+  vanish there: in Umbra `list.activeSelectionBackground` equals the hover widget color that
+  popovers use, and in Scarlet `list.hoverBackground` equals the canvas. The build fails when
+  `--accent` is less than 0.06 from `--background`, `--popover` or `--sidebar` in OKLab. Orca also
+  draws the editor's current line with `--accent`, so it takes this color too.
+- Input borders follow `--border`. Upstream's `input.border` is the full mint accent in Cyberpunk
+  and Umbra (Scarlet's is blue `#00a2ff`), which would put a strong color on every idle field. A
+  focused field shows the focus ring.
+- Markdown links (`markup.underline.link`) take the Underline row's pink, as VS Code colors them
+  through upstream's `markup.underline` rule. Upstream lists no rule for the link scope itself.
 - The chat and terminal selection take the core selection role. For Cyberpunk and Umbra that is
   `editor.selectionBackground`, as VS Code paints it. Scarlet's `editor.selectionBackground` is
   `#000000`, which barely shows on its `#101116` canvas, so Scarlet takes its own selection
