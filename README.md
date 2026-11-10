@@ -89,8 +89,7 @@ palette** for each style from upstream's own colors only, by role:
 <!-- /generated:core -->
 
 A leftover color never ships. The rule or token that carries one takes the core color with the
-same role. `scripts/curation.json` records each change, and `scripts/core-palette.json` the core
-palettes. The three styles share one role structure: errors are the error red, additions the
+same role, and the tables below list each change. The three styles share one role structure: errors are the error red, additions the
 success green, keywords violet, strings sky blue, functions blue, types mint, numbers yellow and
 comments `#6766b3`.
 
@@ -240,12 +239,14 @@ take the core color of a neighboring role instead, and the role changes table li
   Monaco token Orca maps to a scope resolves to one of this theme's rules.
 - Menus and popovers use `editorHoverWidget.background` and the editor text color, the hover
   widget each upstream screenshot shows.
-- Primary text must read at higher contrast than secondary text on each surface where Orca paints
-  both: `--foreground` on the canvas, `--popover-foreground` in popovers and `--sidebar-foreground`
-  on the sidebar. Otherwise it takes the nearest core role that does, and the build fails if none
-  does. In Scarlet, the scarlet editor text in popovers and the sidebar text read lower than its
-  secondary text, so both take the tag pink `#ff5680`, the color Scarlet's selected-row text also
-  uses. The role changes table gives each contrast.
+- Primary text must sit at least 0.06 above the secondary text beside it in OKLab lightness:
+  `--foreground`, `--popover-foreground`, `--sidebar-foreground` and `--accent-foreground` above
+  `--muted-foreground` on the canvas, popovers, sidebar and selected rows, and
+  `--tab-active-foreground` above `--tab-inactive-foreground` on inactive tabs, where Orca paints
+  the active text on hover. The build lifts the primary text in lightness to get there. When that
+  would leave the sRGB gamut, the token takes the core role of nearly the same hue (within 30
+  degrees) that the same lift keeps in gamut, or white when none does. The role changes table
+  lists each one with its reason.
 - Secondary text uses `tab.inactiveForeground`, upstream's color for inactive tabs, inactive panel
   titles and peek results. Upstream sets no `descriptionForeground`. Its line number color is not
   used, because Cyberpunk's `#9f5fff` leaves the sRGB gamut before it reaches 4.5:1.
@@ -327,8 +328,8 @@ take the core color of a neighboring role instead, and the role changes table li
 
 ## Build and verify
 
-The files in `themes`, `terminal`, `scripts/core-palette.json`, `scripts/curation.json` and
-`scripts/deviations.json` are generated. Do not edit them by hand. Change `scripts/build.mjs` and
+The files in `themes` and `terminal`, `scripts/deviations.json` and the tables between the
+`<!-- generated -->` markers in this README are generated. Do not edit them by hand. Change `scripts/build.mjs` and
 rebuild instead.
 
 ```sh
