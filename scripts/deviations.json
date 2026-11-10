@@ -82,14 +82,6 @@
   {
     "theme": "cyberpunk-scarlet",
     "kind": "app",
-    "name": "--accent-foreground",
-    "source": "list.activeSelectionForeground",
-    "upstream": "#ff0055",
-    "shipped": "#ff215e"
-  },
-  {
-    "theme": "cyberpunk-scarlet",
-    "kind": "app",
     "name": "--sidebar-foreground",
     "source": "sideBar.foreground",
     "upstream": "#be4e74",

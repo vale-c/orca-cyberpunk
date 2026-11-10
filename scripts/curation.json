@@ -1201,6 +1201,16 @@
   },
   {
     "style": "cyberpunk-scarlet",
+    "kind": "app",
+    "name": "--accent-foreground",
+    "source": "list.activeSelectionForeground",
+    "upstream": "#ff0055",
+    "role": "tag",
+    "shipped": "#ff5680",
+    "reason": "Lightness alone reaches 4.5:1 only outside the sRGB gamut (#ff0055 to #ff3467, a hue shift), so it takes the neighboring tag role, entity.name.tag."
+  },
+  {
+    "style": "cyberpunk-scarlet",
     "kind": "terminal",
     "name": "black",
     "source": "VS Code default terminal.ansiBlack",

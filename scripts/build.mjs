@@ -117,10 +117,12 @@ const APP_TOKENS = {
     over: '--background',
     readable: ['--background', '--muted', '--popover']
   },
-  // Why the selection, not list.hoverBackground: Scarlet's hover color equals its canvas, and
-  // Cyberpunk and Umbra use one color for both.
-  '--accent': { from: 'list.activeSelectionBackground', over: '--background' },
-  '--accent-foreground': { from: 'list.activeSelectionForeground', readable: ['--accent'] },
+  // Why the suggest widget's selected row: Orca paints --accent for hovered and selected rows on
+  // the canvas, in sidebars and inside popovers (command palette, menus, selects). Upstream's list
+  // colors equal its hover widget in Umbra and its canvas in Scarlet, so a selected menu row
+  // would vanish. This is the color upstream itself draws for the selected row of a popover.
+  '--accent': { from: 'editorSuggestWidget.selectedBackground', over: '--background' },
+  '--accent-foreground': { from: 'list.activeSelectionForeground', readable: ['--accent'], outOfGamut: 'tag' },
   '--border': { from: 'editorGroup.border', over: '--background' },
   // Why the cursor: Orca paints the editor cursor and selection (30%) with the ring, and upstream
   // sets no focusBorder.
@@ -512,6 +514,11 @@ const MIN_TEXT_CONTRAST = 4.5
 const MIN_STATUS_CONTRAST = 3
 const MIN_RING_CONTRAST = 2
 const MIN_SYNTAX_CONTRAST = 3
+// Why OKLab distance, not a contrast ratio: a row fill differs from its surface in hue as much as
+// in lightness. 0.06 is about three just-noticeable differences (0.02 each), so a hovered or
+// selected row stays plain to see on every surface it is painted on.
+const MIN_FILL_DISTANCE = 0.06
+const FILL_SURFACES = { '--accent': ['--background', '--popover', '--sidebar'] }
 // Why above Orca's floors: margin so rounding in another color pipeline cannot tip a shade under.
 const MARGIN = 0.05
 
@@ -798,6 +805,15 @@ function build(id, style, records) {
     const ratio = contrast(tokens[ring], tokens[surface])
     if (ratio < MIN_RING_CONTRAST) {
       fail(`${ring}/${surface} is ${ratio.toFixed(2)}:1, under ${MIN_RING_CONTRAST}:1`)
+    }
+  }
+  for (const [fill, surfaces] of Object.entries(FILL_SURFACES)) {
+    for (const surface of surfaces) {
+      const [a, b] = [hexToOklab(tokens[fill]), hexToOklab(tokens[surface])]
+      const distance = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
+      if (distance < MIN_FILL_DISTANCE) {
+        fail(`${fill} is ${distance.toFixed(3)} from ${surface} in OKLab, under ${MIN_FILL_DISTANCE}`)
+      }
     }
   }
   for (const status of GIT_DECORATIONS) {
