@@ -352,7 +352,7 @@ const SYNTAX = [
     role: 'tag',
     reason: 'Underline is emphasis, so it takes the same pink as italic and bold.'
   },
-  { name: 'Links', from: 'string.other.link', scope: ['string.other.link', 'markup.underline.link'] },
+  { name: 'Links', from: 'string.other.link', scope: ['string.other.link'] },
   {
     name: 'Link titles',
     from: 'string.other.link.title.markdown',
@@ -644,6 +644,24 @@ function upstreamStyle(style, selector) {
   return settings
 }
 
+/** The foreground VS Code gives a plain scope from upstream's plain selectors: the longest
+ *  dot-prefix wins, the later rule on a tie. Undefined when no rule reaches it. */
+function upstreamForeground(style, scope) {
+  let best
+  for (const rule of style.tokenColors) {
+    const selectors = [rule.scope ?? []].flat().flatMap((entry) => entry.split(',')).map((entry) => entry.trim())
+    for (const selector of selectors.filter((entry) => entry && !/\s/.test(entry))) {
+      if (rule.settings.foreground && (scope === selector || scope.startsWith(`${selector}.`))) {
+        const score = selector.split('.').length
+        if (!best || score >= best.score) {
+          best = { score, color: normalize(rule.settings.foreground) }
+        }
+      }
+    }
+  }
+  return best?.color
+}
+
 const normalize = (hex) => {
   const lower = hex.toLowerCase()
   return lower.length === 9 && lower.endsWith('ff') ? lower.slice(0, 7) : lower
@@ -706,6 +724,13 @@ function build(id, style, records) {
       curate('syntax', row.name, row.from, upstream, row.role, color, row.reason)
     } else if (row.role) {
       throw new Error(`${id}: "${row.name}" names a role, but upstream's ${upstream ?? 'missing'} color is no leftover`)
+    }
+    // Why: a scope the row adds can reach a leftover in VS Code through a shorter upstream rule.
+    for (const scope of row.role ? [] : row.scope) {
+      const reached = upstreamForeground(style, scope)
+      if (reached && LEFTOVERS[reached]) {
+        throw new Error(`${id}: "${row.name}" ships ${scope}, which upstream colors ${reached}, a ${LEFTOVERS[reached]} leftover. Drop the scope or curate it`)
+      }
     }
     syntax[row.name] = { settings, color }
   }

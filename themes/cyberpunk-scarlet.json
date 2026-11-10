@@ -415,8 +415,7 @@
     {
       "name": "Links",
       "scope": [
-        "string.other.link",
-        "markup.underline.link"
+        "string.other.link"
       ],
       "settings": {
         "foreground": "#00ff9c"
