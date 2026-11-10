@@ -99,6 +99,8 @@ const CORE = {
 // surfaces in `on` (a translucent token is painted over the surface named after it), first mixed
 // with --foreground at `mixForeground` percent, as Orca mixes chat links and diff text. `curate`
 // replaces a style's upstream color with another source, recorded in scripts/curation.json.
+// `outOfGamut` names the core role a token takes when lightness alone reaches its floor only
+// outside the sRGB gamut, which would shift its hue; the change is recorded in curation.json.
 const APP_TOKENS = {
   '--background': 'editor.background',
   '--editor-surface': 'editor.background',
