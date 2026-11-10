@@ -47,7 +47,6 @@ const CORE = {
   comment: { syntax: 'comment' },
   keyword: { syntax: 'keyword' },
   function: { syntax: 'entity.name.function' },
-  method: { syntax: 'entity.name.method.js' },
   string: { syntax: 'string' },
   number: { syntax: 'constant.numeric' },
   type: { syntax: 'support.class' },
@@ -68,15 +67,14 @@ const CORE = {
     'cyberpunk-umbra': 'sideBar.background',
     'cyberpunk-scarlet': 'sideBarSectionHeader.background'
   },
+  // Why Scarlet's selection highlight: its editor.selectionBackground is #000000, which barely
+  // shows on its #101116 canvas. editor.selectionHighlightBackground is its own scarlet tint.
   selection: {
     cyberpunk: 'editor.selectionBackground',
     'cyberpunk-umbra': 'editor.selectionBackground',
     'cyberpunk-scarlet': 'editor.selectionHighlightBackground'
   }
 }
-
-const SCARLET_SELECTION =
-  "Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches."
 
 // A plain string is an opaque workbench color. `from` is a workbench color or `{ core: role }`.
 // `over` paints a translucent color onto that token, because Orca needs these tokens opaque;
@@ -153,11 +151,7 @@ const APP_TOKENS = {
   // Why the secondary text color: Orca's own chat muted text is --muted-foreground at 83% on the
   // chat canvas, under 4.5:1 when --muted-foreground sits near its floor on the canvas.
   '--chat-muted-foreground': { from: 'tab.inactiveForeground', over: '--background', chat: { on: ['canvas', 'codeBlock'] } },
-  '--chat-selection': {
-    from: 'editor.selectionBackground',
-    over: '--background',
-    curate: { 'cyberpunk-scarlet': { to: { core: 'selection' }, reason: SCARLET_SELECTION } }
-  },
+  '--chat-selection': { from: { core: 'selection' }, over: '--background' },
   // Why the core roles: upstream sets no diffEditor overview or gutter color. The tints keep
   // upstream's own diffEditor colors.
   '--diff-added': {
@@ -451,17 +445,15 @@ const SYNTAX = [
   }
 ]
 
-// Orca terminal keys and their sources. Upstream sets only the foreground and cursor, so VS Code
-// paints the rest: the terminal on panel.background, the selection with editor.selectionBackground.
+// Orca terminal keys and their sources, in the APP_TOKENS forms; translucent colors are painted
+// onto the terminal background. Upstream sets only the foreground and cursor, so VS Code paints
+// the rest: the terminal on panel.background, the selection with editor.selectionBackground.
 const TERMINAL = {
   background: 'panel.background',
   foreground: 'terminal.foreground',
   cursor: 'terminalCursor.foreground',
-  cursorAccent: { from: 'panel.background' },
-  selectionBackground: {
-    from: 'editor.selectionBackground',
-    curate: { 'cyberpunk-scarlet': { to: { core: 'selection' }, reason: SCARLET_SELECTION } }
-  }
+  cursorAccent: 'panel.background',
+  selectionBackground: { from: { core: 'selection' } }
 }
 // Upstream sets no terminal.ansi* color, so VS Code shows its own defaults (these). Each slot takes
 // the core role that plays its part instead, so all 16 colors come from the style.
@@ -682,8 +674,7 @@ function corePalette(id, style) {
     if (LEFTOVERS[color]) {
       throw new Error(`${id}: core role ${role} reads ${source}, a ${LEFTOVERS[color]} leftover`)
     }
-    // Why paint onto the canvas: a translucent core color is only ever seen over the canvas.
-    core[role] = { source, color: isTranslucent(color) ? over(color, workbench(style, CORE.canvas)) : color.slice(0, 7) }
+    core[role] = { source, color }
   }
   return core
 }
@@ -712,34 +703,43 @@ function build(id, style, records) {
     syntax[row.name] = { settings, color }
   }
 
-  const tokens = {}
-  const resolve = (token) => {
-    if (token in tokens) {
-      return tokens[token]
-    }
-    const mapping = APP_TOKENS[token]
-    if (!mapping) {
-      throw new Error(`${token} is not set by this theme`)
-    }
+  const label = (ref) => (typeof ref === 'string' ? ref : `${core[ref.core].source} (${ref.core})`)
+  const read = (ref) => (typeof ref === 'string' ? workbench(style, ref) : core[ref.core].color)
+  /** A table entry's source and color: curated for this style, then painted onto `beneath(spec)`
+   *  when translucent, unless it keeps its alpha. */
+  const pick = (kind, name, mapping, beneath) => {
     const spec = typeof mapping === 'string' ? { from: mapping } : mapping
-    const label = (ref) => (typeof ref === 'string' ? ref : `${core[ref.core].source} (${ref.core})`)
-    const read = (ref) => (typeof ref === 'string' ? workbench(style, ref) : core[ref.core].color)
     let source = label(spec.from)
     let value = read(spec.from)
     const curation = spec.curate?.[id]
     if (curation) {
       const to = read(curation.to)
-      curate('app', token, source, value, curation.to.core ?? label(curation.to), to, curation.reason)
+      curate(kind, name, source, value, curation.to.core ?? label(curation.to), to, curation.reason)
       ;[source, value] = [label(curation.to), to]
     }
     if (!isTranslucent(value)) {
       value = value.slice(0, 7)
     } else if (!spec.keepAlpha) {
-      if (!spec.over) {
-        throw new Error(`${id}: ${token} reads translucent ${value} from ${source}; give it \`over\` or \`keepAlpha\``)
+      const surface = beneath(spec)
+      if (!surface) {
+        throw new Error(`${id}: ${name} reads translucent ${value} from ${source}; give it \`over\` or \`keepAlpha\``)
       }
-      value = over(value, resolve(spec.over))
+      value = over(value, surface)
     }
+    return { spec, source, value }
+  }
+
+  const tokens = {}
+  const resolve = (token) => {
+    if (token in tokens) {
+      return tokens[token]
+    }
+    if (!APP_TOKENS[token]) {
+      throw new Error(`${token} is not set by this theme`)
+    }
+    const picked = pick('app', token, APP_TOKENS[token], (spec) => spec.over && resolve(spec.over))
+    const { spec, source } = picked
+    let { value } = picked
     if (spec.readable || spec.chat) {
       const min = spec.min ?? MIN_TEXT_CONTRAST
       const chat = chatSurfaces(resolve('--foreground'), resolve('--background'))
@@ -832,28 +832,20 @@ function build(id, style, records) {
     return { name, scope, settings }
   })
 
-  const terminalBackground = workbench(style, TERMINAL.background)
+  const terminalBackground = pick('terminal', 'background', TERMINAL.background, () => null).value
   const terminal = {}
   for (const [key, mapping] of Object.entries(TERMINAL)) {
-    const spec = typeof mapping === 'string' ? { from: mapping } : mapping
-    let value = workbench(style, spec.from)
-    const curation = spec.curate?.[id]
-    if (curation) {
-      const to = core[curation.to.core].color
-      curate('terminal', key, spec.from, value, curation.to.core, to, curation.reason)
-      value = to
-    }
-    terminal[key] = isTranslucent(value) ? over(value, terminalBackground) : value.slice(0, 7)
+    terminal[key] = pick('terminal', key, mapping, () => terminalBackground).value
   }
   for (const [key, [vscodeDefault, role, why]] of Object.entries(ANSI)) {
-    terminal[key] = core[role].color
+    terminal[key] = pick('terminal', key, { from: { core: role } }, () => terminalBackground).value
     curate(
       'terminal',
       key,
       `VS Code default terminal.ansi${key[0].toUpperCase()}${key.slice(1)}`,
       vscodeDefault,
       role,
-      core[role].color,
+      terminal[key],
       `Upstream sets no ANSI colors, so VS Code shows its own. This slot takes ${why} (${core[role].source}).`
     )
   }
@@ -862,7 +854,7 @@ function build(id, style, records) {
     fail(`two ANSI slots share a color: ${ansi.join(' ')}`)
   }
 
-  records.core[id] = Object.fromEntries(Object.entries(core).map(([role, { source, color }]) => [role, { source, color }]))
+  records.core[id] = core
   return {
     [`themes/${id}.json`]: { base: 'dark', tokens, tokenColors },
     [`terminal/${id}.json`]: { schemaVersion: 1, mode: 'dark', terminal }

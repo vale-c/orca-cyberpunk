@@ -24,10 +24,6 @@
       "source": "entity.name.function",
       "color": "#00b0ff"
     },
-    "method": {
-      "source": "entity.name.method.js",
-      "color": "#6095ff"
-    },
     "string": {
       "source": "string",
       "color": "#76c1ff"
@@ -117,10 +113,6 @@
     "function": {
       "source": "entity.name.function",
       "color": "#00b0ff"
-    },
-    "method": {
-      "source": "entity.name.method.js",
-      "color": "#6095ff"
     },
     "string": {
       "source": "string",
@@ -212,10 +204,6 @@
       "source": "entity.name.function",
       "color": "#00b0ff"
     },
-    "method": {
-      "source": "entity.name.method.js",
-      "color": "#6095ff"
-    },
     "string": {
       "source": "string",
       "color": "#76c1ff"
@@ -278,7 +266,7 @@
     },
     "selection": {
       "source": "editor.selectionHighlightBackground",
-      "color": "#390e21"
+      "color": "#ff00552c"
     }
   }
 }

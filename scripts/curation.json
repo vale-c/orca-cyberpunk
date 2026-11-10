@@ -1201,26 +1201,6 @@
   },
   {
     "style": "cyberpunk-scarlet",
-    "kind": "app",
-    "name": "--chat-selection",
-    "source": "editor.selectionBackground",
-    "upstream": "#000000",
-    "role": "selection",
-    "shipped": "#390e21",
-    "reason": "Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "terminal",
-    "name": "selectionBackground",
-    "source": "editor.selectionBackground",
-    "upstream": "#000000",
-    "role": "selection",
-    "shipped": "#390e21",
-    "reason": "Scarlet's editor.selectionBackground is #000000, which barely shows on its #101116 canvas. Its own selection highlight, editor.selectionHighlightBackground, is the scarlet tint it uses for matches."
-  },
-  {
-    "style": "cyberpunk-scarlet",
     "kind": "terminal",
     "name": "black",
     "source": "VS Code default terminal.ansiBlack",
