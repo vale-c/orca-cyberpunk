@@ -307,7 +307,7 @@
     "upstream": "#000000",
     "role": "shade",
     "shipped": "#372963",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (tab.inactiveBackground)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark color in the style's own hue (tab.inactiveBackground)."
   },
   {
     "style": "cyberpunk",
@@ -342,12 +342,22 @@
   {
     "style": "cyberpunk",
     "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "info",
+    "shipped": "#00c3ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's cyan, editorLineNumber.activeForeground, which sits within 0.06 of the terminal foreground #00ffc8, so it takes the info role (gitDecoration.modifiedResourceForeground)."
+  },
+  {
+    "style": "cyberpunk",
+    "kind": "terminal",
     "name": "blue",
     "source": "VS Code default terminal.ansiBlue",
     "upstream": "#2472c8",
-    "role": "function",
-    "shipped": "#00b0ff",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's function blue (entity.name.function)."
+    "role": "editorLink",
+    "shipped": "#3d81fe",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's function blue, which sits within 0.06 of cyan #00c3ff, so it takes the editorLink role (editorLink.activeForeground)."
   },
   {
     "style": "cyberpunk",
@@ -358,16 +368,6 @@
     "role": "keyword",
     "shipped": "#d57bff",
     "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
-  },
-  {
-    "style": "cyberpunk",
-    "kind": "terminal",
-    "name": "cyan",
-    "source": "VS Code default terminal.ansiCyan",
-    "upstream": "#11a8cd",
-    "role": "info",
-    "shipped": "#00c3ff",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's cyan, editorLineNumber.activeForeground, which sits too close to the terminal foreground #00ffc8, so it takes the info role (gitDecoration.modifiedResourceForeground)."
   },
   {
     "style": "cyberpunk",
@@ -407,7 +407,7 @@
     "upstream": "#23d18b",
     "role": "lime",
     "shipped": "#9dff00",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's mint, its type color, which sits too close to the terminal foreground #00ffc8, so it takes the lime role (terminalCursor.foreground)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's mint, its type color, which sits within 0.06 of the terminal foreground #00ffc8, so it takes the lime role (terminalCursor.foreground)."
   },
   {
     "style": "cyberpunk",
@@ -425,9 +425,9 @@
     "name": "brightBlue",
     "source": "VS Code default terminal.ansiBrightBlue",
     "upstream": "#3b8eea",
-    "role": "string",
-    "shipped": "#76c1ff",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's sky blue, its string color (string)."
+    "role": "method",
+    "shipped": "#6095ff",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's sky blue, its string color, which sits within 0.06 of cyan #00c3ff, so it takes the method role (entity.name.method.js)."
   },
   {
     "style": "cyberpunk",
@@ -757,7 +757,7 @@
     "upstream": "#000000",
     "role": "shade",
     "shipped": "#1e1d45",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (sideBar.background)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark color in the style's own hue (sideBar.background)."
   },
   {
     "style": "cyberpunk-umbra",
@@ -792,6 +792,16 @@
   {
     "style": "cyberpunk-umbra",
     "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
+  },
+  {
+    "style": "cyberpunk-umbra",
+    "kind": "terminal",
     "name": "blue",
     "source": "VS Code default terminal.ansiBlue",
     "upstream": "#2472c8",
@@ -808,16 +818,6 @@
     "role": "keyword",
     "shipped": "#d57bff",
     "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
-  },
-  {
-    "style": "cyberpunk-umbra",
-    "kind": "terminal",
-    "name": "cyan",
-    "source": "VS Code default terminal.ansiCyan",
-    "upstream": "#11a8cd",
-    "role": "cyan",
-    "shipped": "#00ffc8",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
   },
   {
     "style": "cyberpunk-umbra",
@@ -857,7 +857,7 @@
     "upstream": "#23d18b",
     "role": "lime",
     "shipped": "#9dff00",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's mint, its type color, which sits too close to the terminal foreground #00ff6a, so it takes the lime role (terminalCursor.foreground)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's mint, its type color, which sits within 0.06 of the terminal foreground #00ff6a, so it takes the lime role (terminalCursor.foreground)."
   },
   {
     "style": "cyberpunk-umbra",
@@ -1217,7 +1217,7 @@
     "upstream": "#000000",
     "role": "shade",
     "shipped": "#240000",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark step off the terminal background in the style's own hue (sideBarSectionHeader.background)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes a dark color in the style's own hue (sideBarSectionHeader.background)."
   },
   {
     "style": "cyberpunk-scarlet",
@@ -1252,12 +1252,22 @@
   {
     "style": "cyberpunk-scarlet",
     "kind": "terminal",
+    "name": "cyan",
+    "source": "VS Code default terminal.ansiCyan",
+    "upstream": "#11a8cd",
+    "role": "cyan",
+    "shipped": "#00ffc8",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
+  },
+  {
+    "style": "cyberpunk-scarlet",
+    "kind": "terminal",
     "name": "blue",
     "source": "VS Code default terminal.ansiBlue",
     "upstream": "#2472c8",
     "role": "info",
     "shipped": "#00c3ff",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's function blue, which sits too close to the terminal foreground #00a2ff, so it takes the info role (gitDecoration.modifiedResourceForeground)."
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's function blue, which sits within 0.06 of the terminal foreground #00a2ff, so it takes the info role (gitDecoration.modifiedResourceForeground)."
   },
   {
     "style": "cyberpunk-scarlet",
@@ -1268,16 +1278,6 @@
     "role": "keyword",
     "shipped": "#d57bff",
     "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's keyword violet (keyword)."
-  },
-  {
-    "style": "cyberpunk-scarlet",
-    "kind": "terminal",
-    "name": "cyan",
-    "source": "VS Code default terminal.ansiCyan",
-    "upstream": "#11a8cd",
-    "role": "cyan",
-    "shipped": "#00ffc8",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's cyan, editorLineNumber.activeForeground (editorLineNumber.activeForeground)."
   },
   {
     "style": "cyberpunk-scarlet",
@@ -1315,9 +1315,9 @@
     "name": "brightGreen",
     "source": "VS Code default terminal.ansiBrightGreen",
     "upstream": "#23d18b",
-    "role": "type",
-    "shipped": "#00ff9c",
-    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. This slot takes upstream's mint, its type color (support.class)."
+    "role": "lime",
+    "shipped": "#9dff00",
+    "reason": "Upstream sets no ANSI colors, so VS Code shows its own. It would take upstream's mint, its type color, which sits within 0.06 of cyan #00ffc8, so it takes the lime role (terminalCursor.foreground)."
   },
   {
     "style": "cyberpunk-scarlet",

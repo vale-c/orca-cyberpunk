@@ -63,6 +63,8 @@ const CORE = {
   // A dark color in each style's own hue, for ANSI black. Like most themes' black, it may sit
   // close to the terminal background.
   lime: 'terminalCursor.foreground',
+  method: { syntax: 'entity.name.method.js' },
+  editorLink: 'editorLink.activeForeground',
   // Quiet fills: upstream's panel surface, which Scarlet paints like its canvas, so Scarlet takes
   // its dropdown fill.
   quiet: {
@@ -479,22 +481,26 @@ const TERMINAL = {
   selectionBackground: { from: { core: 'selection' } }
 }
 // Upstream sets no terminal.ansi* color, so VS Code shows its own defaults (these). Each slot takes
-// the core role that plays its part instead, so all 16 colors come from the style. A colored slot
-// whose role sits within MIN_FILL_DISTANCE of the terminal foreground takes its fallback role.
+// the core role that plays its part instead, so all 16 colors come from the style. Slots are
+// assigned in this order. A colored slot takes the first of its roles that is at least
+// MIN_FILL_DISTANCE from the terminal foreground and from every colored slot before it; a fallback
+// role must also read at 4.5:1 on the terminal background.
+// Why cyan before blue: Cyberpunk's foreground is upstream's cyan, so its cyan slot falls back to
+// the info blue, and the blue slots then step around it.
 const ANSI = {
-  black: ['#000000', 'shade', 'a dark step off the terminal background in the style\'s own hue'],
+  black: ['#000000', 'shade', "a dark color in the style's own hue"],
   red: ['#cd3131', 'error', "upstream's error red"],
   green: ['#0dbc79', 'green', "upstream's peek view green"],
   yellow: ['#e5e510', 'warning', "upstream's warning orange, so it stays apart from bright yellow"],
-  blue: ['#2472c8', 'function', "upstream's function blue", 'info'],
+  cyan: ['#11a8cd', 'cyan', "upstream's cyan, editorLineNumber.activeForeground", ['info']],
+  blue: ['#2472c8', 'function', "upstream's function blue", ['info', 'editorLink']],
   magenta: ['#bc3fbc', 'keyword', "upstream's keyword violet"],
-  cyan: ['#11a8cd', 'cyan', "upstream's cyan, editorLineNumber.activeForeground", 'info'],
   white: ['#e5e5e5', 'blockVariable', "upstream's lavender white, its block variable color"],
   brightBlack: ['#666666', 'comment', "upstream's comment color"],
   brightRed: ['#f14c4c', 'tag', "upstream's tag pink"],
-  brightGreen: ['#23d18b', 'type', "upstream's mint, its type color", 'lime'],
+  brightGreen: ['#23d18b', 'type', "upstream's mint, its type color", ['lime']],
   brightYellow: ['#f5f543', 'number', "upstream's number yellow"],
-  brightBlue: ['#3b8eea', 'string', "upstream's sky blue, its string color"],
+  brightBlue: ['#3b8eea', 'string', "upstream's sky blue, its string color", ['method']],
   brightMagenta: ['#d670d6', 'attribute', "upstream's magenta, its attribute color"],
   brightCyan: ['#29b8db', 'property', "upstream's pale cyan, its CSS property color"],
   brightWhite: ['#e5e5e5', 'text', "upstream's white, its workbench foreground"]
@@ -910,18 +916,39 @@ function build(id, style, records) {
     terminal[key] = pick('terminal', key, mapping, () => terminalBackground).value
   }
   const ACHROMATIC = ['black', 'white', 'brightBlack', 'brightWhite']
-  for (const [key, [vscodeDefault, preferred, why, fallback]] of Object.entries(ANSI)) {
+  // Why exempt a normal and bright pair of one name: by terminal convention the bright color is a
+  // lighter version of the same color, so the two are meant to look alike.
+  const sameName = (x, y) => x.replace(/^bright/, '').toLowerCase() === y.replace(/^bright/, '').toLowerCase()
+  const colored = []
+  for (const [key, [vscodeDefault, preferred, why, fallbacks = []]] of Object.entries(ANSI)) {
     const slot = (role) => pick('terminal', key, { from: { core: role } }, () => terminalBackground).value
-    const blends = (color) => !ACHROMATIC.includes(key) && fillDistance(color, terminal.foreground) < MIN_FILL_DISTANCE
-    let [role, reason] = [preferred, `This slot takes ${why} (${core[preferred].source}).`]
-    if (blends(slot(preferred))) {
-      if (!fallback || blends(slot(fallback))) {
-        fail(`ANSI ${key} is within ${MIN_FILL_DISTANCE} of the terminal foreground ${terminal.foreground} in OKLab`)
+    const clash = (role) => {
+      const color = slot(role)
+      if (ACHROMATIC.includes(key)) {
+        return null
       }
-      role = fallback
-      reason = `It would take ${why}, which sits too close to the terminal foreground ${terminal.foreground}, so it takes the ${fallback} role (${core[fallback].source}).`
+      if (fillDistance(color, terminal.foreground) < MIN_FILL_DISTANCE) {
+        return `the terminal foreground ${terminal.foreground}`
+      }
+      const near = colored.find((other) => !sameName(key, other) && fillDistance(color, terminal[other]) < MIN_FILL_DISTANCE)
+      if (near) {
+        return `${near} ${terminal[near]}`
+      }
+      return role !== preferred && contrast(color, terminalBackground) < MIN_TEXT_CONTRAST ? `under ${MIN_TEXT_CONTRAST}:1 on the terminal background` : null
     }
+    const first = clash(preferred)
+    const role = [preferred, ...fallbacks].find((candidate) => !clash(candidate))
+    if (!role) {
+      fail(`ANSI ${key} has no role that is ${MIN_FILL_DISTANCE} from the terminal foreground and the slots before it, and readable: ${[preferred, ...fallbacks].map((candidate) => `${candidate} (${clash(candidate)})`).join(', ')}`)
+    }
+    const reason =
+      role === preferred
+        ? `This slot takes ${why} (${core[preferred].source}).`
+        : `It would take ${why}, which sits within ${MIN_FILL_DISTANCE} of ${first}, so it takes the ${role} role (${core[role].source}).`
     terminal[key] = slot(role)
+    if (!ACHROMATIC.includes(key)) {
+      colored.push(key)
+    }
     curate(
       'terminal',
       key,

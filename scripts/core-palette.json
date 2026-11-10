@@ -80,6 +80,14 @@
       "source": "terminalCursor.foreground",
       "color": "#9dff00"
     },
+    "method": {
+      "source": "entity.name.method.js",
+      "color": "#6095ff"
+    },
+    "editorLink": {
+      "source": "editorLink.activeForeground",
+      "color": "#3d81fe"
+    },
     "quiet": {
       "source": "panel.background",
       "color": "#100d23"
@@ -178,6 +186,14 @@
       "source": "terminalCursor.foreground",
       "color": "#9dff00"
     },
+    "method": {
+      "source": "entity.name.method.js",
+      "color": "#6095ff"
+    },
+    "editorLink": {
+      "source": "editorLink.activeForeground",
+      "color": "#3d81fe"
+    },
     "quiet": {
       "source": "panel.background",
       "color": "#131341"
@@ -275,6 +291,14 @@
     "lime": {
       "source": "terminalCursor.foreground",
       "color": "#9dff00"
+    },
+    "method": {
+      "source": "entity.name.method.js",
+      "color": "#6095ff"
+    },
+    "editorLink": {
+      "source": "editorLink.activeForeground",
+      "color": "#3d81fe"
     },
     "quiet": {
       "source": "dropdown.background",
