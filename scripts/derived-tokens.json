@@ -24,7 +24,7 @@
   "--chat-user-message": "Upstream sets no chat color. Orca mixes the white text lightly into the chat canvas, which keeps the bubble in the canvas hue.",
   "--chat-bold-foreground": "Upstream sets no chat color. Orca follows the chat heading color, the white text, so bold text stays text and the accent stays for action and state.",
   "--chat-inline-code": "Upstream sets no textPreformat.background. Orca tints the chat canvas with the white text, which keeps the canvas hue.",
-  "--chat-inline-code-foreground": "Upstream sets no textPreformat.foreground. Its curated Markdown inline code violet, #d57bff, reads 3.6:1 (Cyberpunk) and 4.4:1 (Scarlet) on Orca's inline code chip over the user message, and Cyberpunk's would leave the sRGB gamut before 4.5:1. So every style keeps Orca's own code text, the white text at 85%.",
+  "--chat-inline-code-foreground": "Upstream sets no textPreformat.foreground. Its curated Markdown inline code violet, #d57bff, reads under 4.5:1 on Orca's inline code chip over the user message in Cyberpunk and Scarlet, and Cyberpunk's would leave the sRGB gamut before it reaches 4.5:1. So every style keeps Orca's own code text, the white text at 85%.",
   "--chat-code-block": "Upstream sets no textCodeBlock.background. Orca tints the chat canvas with the white text, which keeps the canvas hue.",
   "--chat-selection-foreground": "Follows --foreground, the white text upstream's selection shows.",
   "--diff-added-gutter": "Upstream sets no diffEditorGutter color, and VS Code then tints the diff gutter from the inserted color. Orca tints it from --diff-added the same way.",

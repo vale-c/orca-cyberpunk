@@ -160,17 +160,8 @@ would read as plain output. They must also stay 0.06 from each other, so no two 
 color. A normal and bright pair of one name (red and bright red, and so on) is exempt, because
 by terminal convention the bright color is a lighter version of the same color. The build
 assigns the slots in table order, cyan before blue. Each slot takes the first of its roles that
-passes, and a fallback role must also read at 4.5:1 on the terminal background:
-
-- Cyberpunk's cyan equals its teal foreground `#00ffc8`, so it takes info `#00c3ff` (9.29:1).
-  Its blue, function `#00b0ff`, is then 0.053 from that cyan, so it takes upstream's editor link
-  blue `#3d81fe` (5.23:1). Its bright blue, string `#76c1ff`, is 0.055 from the cyan, so it takes
-  upstream's method blue `#6095ff` (6.56:1).
-- Scarlet's blue, function, is 0.038 from its foreground `#00a2ff`, so it takes info `#00c3ff`
-  (9.20:1). Its bright green, type `#00ff9c`, is 0.057 from its cyan `#00ffc8`, so it takes the
-  lime of upstream's terminal cursor, `#9dff00` (15.03:1).
-- The mint bright green is 0.057 from Cyberpunk's foreground and 0.054 from Umbra's `#00ff6a`,
-  so both take the lime `#9dff00` (15.16:1 and 13.98:1).
+passes, and a fallback role must also read at 4.5:1 on the terminal background. The Why column
+gives each slot's distances and contrast as the build measures them.
 
 <!-- generated:ansi -->
 | Slot | VS Code default | Role | Cyberpunk | Umbra | Scarlet | Why |
@@ -230,10 +221,8 @@ line, which Orca paints with `--accent`. Only the comment color needed a change 
 | Scarlet | `--git-decoration-ignored` | `gitDecoration.ignoredResourceForeground` | `#70243d` | `#94455c` |
 <!-- /generated:lightness -->
 
-Four colors reach their floor only by leaving the sRGB gamut, which would shift their hue. They
-take the core color of a neighboring role instead, as the role changes table shows: the links of
-Cyberpunk and Umbra take the info blue `#00c3ff`, and Cyberpunk's diff removal hue and Scarlet's
-selected row text take the tag pink `#ff5680`.
+Some colors reach their floor only by leaving the sRGB gamut, which would shift their hue. They
+take the core color of a neighboring role instead, and the role changes table lists each one.
 
 ### Other differences
 
@@ -248,6 +237,12 @@ selected row text take the tag pink `#ff5680`.
   Monaco token Orca maps to a scope resolves to one of this theme's rules.
 - Menus and popovers use `editorHoverWidget.background` and the editor text color, the hover
   widget each upstream screenshot shows.
+- Primary text must read at higher contrast than secondary text on each surface where Orca paints
+  both: `--foreground` on the canvas, `--popover-foreground` in popovers and `--sidebar-foreground`
+  on the sidebar. Otherwise it takes the nearest core role that does, and the build fails if none
+  does. In Scarlet, the scarlet editor text in popovers and the sidebar text read lower than its
+  secondary text, so both take the tag pink `#ff5680`, the color Scarlet's selected-row text also
+  uses. The role changes table gives each contrast.
 - Secondary text uses `tab.inactiveForeground`, upstream's color for inactive tabs, inactive panel
   titles and peek results. Upstream sets no `descriptionForeground`. Its line number color is not
   used, because Cyberpunk's `#9f5fff` leaves the sRGB gamut before it reaches 4.5:1.
@@ -261,16 +256,18 @@ selected row text take the tag pink `#ff5680`.
 - Quiet fills (`--muted`) use `panel.background` in Cyberpunk, `editorGroupHeader.tabsBackground`
   in Umbra and `dropdown.background` in Scarlet. Upstream's `input.background` equals the hover
   widget color in Cyberpunk and Umbra, which would hide the command palette's input band and
-  pinned rows inside popovers. Umbra's panel sits 0.038 from its sidebar, and Scarlet's panel is
-  its canvas. The build fails when `--muted` is less than 0.06 from `--background`, `--popover` or
+  pinned rows inside popovers. Umbra's panel sits too close to its sidebar, and Scarlet's panel
+  is its canvas. The build fails when `--muted` is less than 0.06 from `--background`, `--popover` or
   `--sidebar`. Scarlet's quiet fill, and so its secondary buttons, are green (`#012112`): its
   `dropdown.background` is the green black that Scarlet copies from Cyberpunk, and no Scarlet dark
   red in upstream's theme passes that check.
-- Hairlines (`--border` and `--split-divider`) use `editorGroup.border` in Umbra and Scarlet and
-  `editorWhitespace.foreground` in Cyberpunk. Cyberpunk's group border `#1e2c3f` is 0.052 from its
-  canvas, and its title bar border equals its quiet fill, which would hide the outline of a
-  bordered quiet box. The build fails when `--border` is less than 0.06 from `--background` or
-  `--muted`.
+- Hairlines (`--border` and `--split-divider`) use `editorWhitespace.foreground` in Cyberpunk and
+  Umbra and `editorGroup.border` in Scarlet. Cyberpunk's group border nearly matches its canvas,
+  and Umbra's its sidebar, where Orca also draws hairlines. The build fails when `--border` is less
+  than 0.06 from `--background`, `--muted` or `--sidebar`.
+- Sidebar lines (`--sidebar-border`) use `sideBar.border`. Scarlet's is its canvas color, which
+  barely shows on its darker sidebar, so Scarlet's sidebar lines take its hairline role. The build
+  fails when `--sidebar-border` is less than 0.06 from `--sidebar`.
 - Input borders follow `--border`. Upstream's `input.border` is the full mint accent in Cyberpunk
   and Umbra (Scarlet's is blue `#00a2ff`), which would put a strong color on every idle field. A
   focused field shows the focus ring.
@@ -279,7 +276,7 @@ selected row text take the tag pink `#ff5680`.
 - The chat and terminal selection take the core selection role. For Cyberpunk and Umbra that is
   `editor.selectionBackground`, as VS Code paints it. Scarlet's `editor.selectionBackground` is
   `#000000`, which barely shows on its `#101116` canvas, so Scarlet takes its own selection
-  highlight, `editor.selectionHighlightBackground` (`#ff00552c`, `#390e21` on the canvas).
+  highlight, `editor.selectionHighlightBackground` (`#ff00552c`).
 - Focus rings, the editor cursor and the editor selection use `editorCursor.foreground`. Orca draws
   the cursor and a 30% selection from the ring color. Upstream sets no `focusBorder`.
 - The active tab line is `panelTitle.activeBorder`. Cyberpunk and Umbra set no
@@ -384,4 +381,4 @@ Orca's plugin directory lists the newest `vX.Y.Z` tag. To release a change:
 
 GPL-3.0, the license in upstream's `LICENSE` file. Upstream's `package.json` says MIT, but the
 license file it ships is the GPL, so this plugin follows the file. See [LICENSE](LICENSE).
-Cyberpunk is by [max-SS](https://github.com/prometheux-ar).
+Cyberpunk is by [max-SS](https://github.com/max-SS).
