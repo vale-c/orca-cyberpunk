@@ -237,8 +237,13 @@ selected row text take the tag pink `#ff5680`.
 
 - `--foreground` is upstream's white workbench `foreground`, not its mint (Scarlet: scarlet)
   `editor.foreground`. Orca uses `--foreground` for the text of chat, settings and menus as well
-  as the editor, so the accent stays for buttons, the active tab, selected rows and focus. Code
-  keeps upstream's colors because every scope Orca's languages color has a rule.
+  as the editor, so the accent stays for buttons, the active tab, selected rows and focus.
+- Orca draws code through Monaco on its `vs-dark` base, so a scope with no rule shows Dark+.
+  Upstream sets no rule for `meta.decorator` (Orca's annotations) or `constant` (named constants in
+  PHP, shell, R and Elixir), so they would show Dark+ `#cc6666` and `#569cd6`. Decorators take the
+  keyword violet, the color upstream gives `storage.type.annotation` in VS Code grammars, and
+  constants take the number yellow, upstream's color for its named constants. With them, every
+  Monaco token Orca maps to a scope resolves to one of this theme's rules.
 - Menus and popovers use `editorHoverWidget.background` and the editor text color, the hover
   widget each upstream screenshot shows.
 - Secondary text uses `tab.inactiveForeground`, upstream's color for inactive tabs, inactive panel
@@ -288,11 +293,15 @@ selected row text take the tag pink `#ff5680`.
   their alpha, because Orca paints them over a surface.
 - Orca reads no descendant selectors (`a b`), so a rule that uses only those ships under the plain
   scope it ends with, when one exists: CSS property names, HTML attributes, the top JSON key
-  level, Markdown heading marks, inline code and inline code punctuation. The rest of upstream's
-  scopes are left out. They fall in these groups: descendant selectors with no plain equivalent
-  (nested JSON keys, nested bold and italic, scoped variables, methods and decorators), glob
-  scopes (`*url*`), scopes of tools Orca does not run (`markup.*.git_gutter`), misspelled scopes
-  that match nothing, scopes a shorter shipped scope already gives the same color
+  level, Markdown heading marks, inline code and inline code punctuation. Orca's Markdown editor
+  maps a scope to a color only when Dark+ colors it or Orca lists it as themable, so the Inline
+  code punctuation and Link references rows apply only once Orca maps those scopes. The rest of
+  upstream's scopes are left out. They fall in these groups: descendant selectors with no plain
+  equivalent (nested JSON keys, nested bold and italic, scoped variables, methods and
+  decorators), glob scopes (`*url*`), scopes of tools Orca does not run (`markup.*.git_gutter`),
+  Markdown scopes VS Code's current grammar never emits (fenced code, fence punctuation, fence
+  language and list item marks), misspelled scopes that match nothing, scopes a shorter shipped
+  scope already gives the same color
   (`punctuation.definition.tag.*.html` under `punctuation.definition.tag`), and scopes a leftover
   rule spreads onto unrelated code (`punctuation.section.class.end` in the fenced-code rule).
   `SYNTAX` in `scripts/build.mjs` is the full list of what ships.
