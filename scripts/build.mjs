@@ -312,7 +312,9 @@ const SYNTAX = [
   {
     name: 'JSON keys',
     from: 'source.json meta.structure.dictionary.json support.type.property-name.json',
-    scope: ['support.type.property-name.json'],
+    // Why the plain scope too: Orca's JSON tokenizer emits string.key.json, which it colors by
+    // support.type.property-name.
+    scope: ['support.type.property-name.json', 'support.type.property-name'],
     role: 'keyword',
     reason: "The top-level key color takes upstream's own violet, the hue nearest the Material purple. Orca reads no nested-key selectors, so this is the only key level that ships."
   },
@@ -324,14 +326,15 @@ const SYNTAX = [
     reason: "Markdown prose reads as text: upstream's own text color is its workbench foreground."
   },
   // Why no Material green: that rule writes "markup.heading | markup.heading entity.name" as one
-  // selector, which VS Code never matches, so upstream's headings are its own sky blue.
+  // selector, which VS Code never matches. Heading text is entity.name.section.markdown, which
+  // upstream's entity.name rule colors mint, in VS Code and in Orca alike.
   { name: 'Headings', from: 'markup.heading', scope: ['markup.heading'] },
   {
     name: 'Heading marks',
     from: 'markup.heading.markdown punctuation.definition.heading.markdown',
     scope: ['punctuation.definition.heading.markdown'],
-    role: 'string',
-    reason: "The # marks take the heading color that upstream's own String rule gives markup.heading."
+    role: 'type',
+    reason: "The # marks take the mint that upstream's own entity.name rule gives the heading text."
   },
   {
     name: 'Inline code',

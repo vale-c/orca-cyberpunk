@@ -329,7 +329,8 @@
     {
       "name": "JSON keys",
       "scope": [
-        "support.type.property-name.json"
+        "support.type.property-name.json",
+        "support.type.property-name"
       ],
       "settings": {
         "foreground": "#d57bff"
@@ -361,7 +362,7 @@
         "punctuation.definition.heading.markdown"
       ],
       "settings": {
-        "foreground": "#76c1ff"
+        "foreground": "#00ff9c"
       }
     },
     {

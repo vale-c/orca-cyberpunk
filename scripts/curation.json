@@ -95,9 +95,9 @@
     "name": "Heading marks",
     "source": "markup.heading.markdown punctuation.definition.heading.markdown",
     "upstream": "#c3e88d",
-    "role": "string",
-    "shipped": "#76c1ff",
-    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "The # marks take the mint that upstream's own entity.name rule gives the heading text."
   },
   {
     "style": "cyberpunk",
@@ -555,9 +555,9 @@
     "name": "Heading marks",
     "source": "markup.heading.markdown punctuation.definition.heading.markdown",
     "upstream": "#c3e88d",
-    "role": "string",
-    "shipped": "#76c1ff",
-    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "The # marks take the mint that upstream's own entity.name rule gives the heading text."
   },
   {
     "style": "cyberpunk-umbra",
@@ -1005,9 +1005,9 @@
     "name": "Heading marks",
     "source": "markup.heading.markdown punctuation.definition.heading.markdown",
     "upstream": "#c3e88d",
-    "role": "string",
-    "shipped": "#76c1ff",
-    "reason": "The # marks take the heading color that upstream's own String rule gives markup.heading."
+    "role": "type",
+    "shipped": "#00ff9c",
+    "reason": "The # marks take the mint that upstream's own entity.name rule gives the heading text."
   },
   {
     "style": "cyberpunk-scarlet",
